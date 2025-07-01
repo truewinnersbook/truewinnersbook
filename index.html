@@ -1,151 +1,152 @@
-<!DOCTYPE html><html lang="hu"><head>
+<!DOCTYPE html><html lang="hu">
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Az igazi győztesek</title>
   <style>
-    * {
+    body {
       margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }body {
-  font-family: Arial, sans-serif;
-  color: white;
-  background-color: #000;
-}
-
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.7);
-  padding: 10px 20px;
-  z-index: 999;
-}
-
-.menu-button {
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.buy-button {
-  background: yellow;
-  color: black;
-  padding: 5px 15px;
-  font-weight: bold;
-  border-radius: 5px;
-  text-decoration: none;
-}
-
-.flags img {
-  width: 30px;
-  height: 20px;
-  margin-left: 10px;
-  vertical-align: middle;
-}
-
-.main-content {
-  background-image: url("borito.png");
-  background-size: cover;
-  background-position: center;
-  min-height: 100vh;
-  padding-top: 80px;
-  padding: 80px 20px 20px;
-}
-
-.description {
-  background-color: rgba(0, 0, 0, 0.7);
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 700px;
-  margin: auto;
-}
-
-nav {
-  position: fixed;
-  top: 0;
-  left: -100%;
-  width: 80%;
-  height: 100%;
-  background: #111;
-  transition: 0.3s;
-  padding: 60px 20px;
-  z-index: 1000;
-}
-
-nav a {
-  display: block;
-  color: white;
-  text-decoration: none;
-  margin: 15px 0;
-  font-size: 18px;
-}
-
-nav.show {
-  left: 0;
-}
-
-.author-page,
-.contact-page {
-  display: none;
-  padding: 100px 20px 20px;
-  max-width: 800px;
-  margin: auto;
-  background-color: #111;
-  color: white;
-}
-
-.author-page img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
-
+      font-family: Arial, sans-serif;
+      background: #000 url('borito.png') no-repeat center top;
+      background-size: cover;
+      color: white;
+    }
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 2rem;
+      min-height: 100vh;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+    }
+    .flags img {
+      width: 30px;
+      height: 20px;
+      margin-left: 0.5rem;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+    .flags img.active {
+      border: 2px solid yellow;
+    }
+    .menu-button {
+      font-size: 1.5rem;
+      background: none;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .order-btn {
+      background-color: yellow;
+      color: black;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    nav {
+      position: absolute;
+      top: 60px;
+      left: 0;
+      background-color: #111;
+      width: 100%;
+      display: none;
+      flex-direction: column;
+    }
+    nav a {
+      padding: 1rem;
+      text-decoration: none;
+      color: white;
+      border-bottom: 1px solid #333;
+    }
+    nav.show {
+      display: flex;
+    }
+    .content {
+      max-width: 800px;
+      margin: auto;
+      text-align: justify;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.8rem;
+      color: #aaa;
+    }
   </style>
-</head><body>
-  <header>
-    <div class="menu-button" onclick="toggleMenu()">☰</div>
-    <a class="buy-button" href="#">Buy</a>
-    <div class="flags">
-      <img src="hu.png" alt="HU" />
-      <img src="en.png" alt="EN" />
+</head>
+<body>
+  <div class="overlay">
+    <div class="header">
+      <button class="menu-button" onclick="toggleMenu()">☰</button>
+      <a href="#" class="order-btn" id="order-button">Megrendelés</a>
+      <div class="flags">
+        <img src="flag-hu.png" alt="HU" onclick="switchLanguage('hu')" id="flag-hu" class="active">
+        <img src="flag-en.png" alt="EN" onclick="switchLanguage('en')" id="flag-en">
+      </div>
     </div>
-  </header>  <nav id="menu">
-    <a href="#" onclick="showPage('main')">Főoldal</a>
-    <a href="#" onclick="showPage('author')">A szerzőről</a>
-    <a href="#" onclick="showPage('contact')">Kapcsolat</a>
-    <a href="#" onclick="showPage('buy')">Könyvvásárlás</a>
-  </nav>  <div class="main-content" id="main">
-    <div class="description">
-      <h1>Az igazi győztesek</h1>
-      <p>Az Olympus Intézet futócsapatába bekerülni az ország egyik legkeményebb kihívása. A verseny szoros, a tét hatalmas: csak az maradhat talpon, aki bírja fizikailag és lelkileg is. A fiatal atléták nemcsak az idővel, hanem egymással, az elvárásokkal és saját belső korlátaikkal is megküzdenek.</p>
-      <p>Egy váratlan jelentkező felkavarja az állóvizet. Egy döntés, amit senki sem ért, ösztönből születik – és mindent megváltoztat. Az edzők, a csapattársak, a rendszer: mindenki válaszúthoz érkezik.</p>
-      <p>Ez a történet a küzdelemről, az összetartozásról és a vezetés erejéről szól. Arról, hogyan formálhat át egyetlen ember jelenléte egy egész közösséget. És hogy a legmélyebb döntéseink értelmét sokszor csak évekkel később érthetjük meg – ha egyáltalán valaha megértjük azt.</p>
-    </div>
-  </div>  <div class="author-page" id="author">
-    <img src="szerzo.jpg" alt="Hudák Olivér" />
-    <p>Hudák Olivér természetközeli környezetben nőtt fel, ahol már fiatal korától különleges figyelemmel fordult a világ részletei felé. Megérintették a táj színei, a fények és árnyékok játéka, a formák harmóniája. A képi világ iránti vonzalma korán kialakult, és azóta is végigkíséri alkotói útján.</p>
-    <p>Érdeklődése a film, a fotó és a festészet mellett a zene és dalszerzés irányába is kiterjed, ezek számára nemcsak kifejezőeszközök, hanem a belső világ megjelenítésének természetes formái. Alkotásaiban a művészetet egyfajta belső nyelvként használja, hogy az emberi lélek mélységeit és a világban rejlő láthatatlan minőségeket közvetítse.</p>
-    <p>Munkáiban központi szerepet kap az élet szépsége, a tudatosság és a lelki világ. Évek óta foglalkoztatja a pszichológia, a spiritualitás és az élet értelmének keresése. Forgatókönyveiben, filmötleteiben és képeiben gyakran jelenik meg az a szándék, hogy az ember belső forrásához, mélyebb önmagához vezessen vissza – csendesen, érzékenyen, túl a felszíni történeteken.</p>
-    <p>Alkotói törekvése, hogy eszköztárát folyamatosan fejlesztve minél professzionálisabban tudja megragadni és átadni azt a láthatatlan világot, amely a lélekből fakad – legyen az egy mozdulatban, egy hangban vagy egy pillanatban elkapott fényben.</p>
-  </div>  <div class="contact-page" id="contact">
-    <h2>Kapcsolat</h2>
-    <p>E-mail: info@truewinnersbook.com</p>
+    <nav id="menu">
+      <a href="#" onclick="navigate('home')" id="nav-home">Főoldal</a>
+      <a href="#" onclick="navigate('author')" id="nav-author">A szerzőről</a>
+      <a href="#" onclick="navigate('contact')" id="nav-contact">Kapcsolat</a>
+      <a href="#" onclick="navigate('order')" id="nav-order">Megrendelés</a>
+    </nav><div class="content" id="page-content">
+  <p id="description">
+    Az Olympus Intézet futócsapatába bekerülni az ország egyik legkeményebb kihívása. A verseny szoros, a tét hatalmas: csak az maradhat talpon, aki bírja fizikailag és lelkileg is. A fiatal atléták nemcsak az idővel, hanem egymással, az elvárásokkal és saját belső korlátaikkal is megküzdenek.<br><br>
+    Egy váratlan jelentkező felkavarja az állóvizet. Egy döntés, amit senki sem ért, ösztönből születik – és mindent megváltoztat. Az edzők, a csapattársak, a rendszer: mindenki válaszúthoz érkezik.<br><br>
+    Ez a történet a küzdelemről, az összetartozásról és a vezetés erejéről szól. Arról, hogyan formálhat át egyetlen ember jelenléte egy egész közösséget. És hogy a legmélyebb döntéseink értelmét sokszor csak évekkel később érthetjük meg – ha egyáltalán valaha megértjük azt.<br><br>
+    Ez egy regény versenyről, sorsokról és arról, mi tesz valakit igazi győztessé.
+  </p>
+</div>
+
+<footer>
+  Kapcsolat: <a href="tel:+36705298594" style="color: yellow;">06 70 529 85 94</a>
+</footer>
+
   </div>  <script>
-    const nav = document.getElementById("menu");
+    const huText = {
+      "description": `Az Olympus Intézet futócsapatába bekerülni az ország egyik legkeményebb kihívása. A verseny szoros, a tét hatalmas: csak az maradhat talpon, aki bírja fizikailag és lelkileg is. A fiatal atléták nemcsak az idővel, hanem egymással, az elvárásokkal és saját belső korlátaikkal is megküzdenek.<br><br>
+      Egy váratlan jelentkező felkavarja az állóvizet. Egy döntés, amit senki sem ért, ösztönből születik – és mindent megváltoztat. Az edzők, a csapattársak, a rendszer: mindenki válaszúthoz érkezik.<br><br>
+      Ez a történet a küzdelemről, az összetartozásról és a vezetés erejéről szól. Arról, hogyan formálhat át egyetlen ember jelenléte egy egész közösséget. És hogy a legmélyebb döntéseink értelmét sokszor csak évekkel később érthetjük meg – ha egyáltalán valaha megértjük azt.<br><br>
+      Ez egy regény versenyről, sorsokról és arról, mi tesz valakit igazi győztessé.`,
+      "nav-home": "Főoldal",
+      "nav-author": "A szerzőről",
+      "nav-contact": "Kapcsolat",
+      "nav-order": "Megrendelés",
+      "order-button": "Megrendelés"
+    };
+
+    const enText = {
+      "description": `Getting into the Olympus Institute’s running team is one of the toughest challenges in the country. The competition is fierce, and the stakes are high: only those who are strong both physically and mentally can survive. The young athletes must battle not only time, but each other, expectations, and their own internal limits.<br><br>
+      A surprising applicant stirs the waters. A decision born from instinct, misunderstood by everyone – and it changes everything. Coaches, teammates, the system: everyone reaches a crossroads.<br><br>
+      This is a story about struggle, unity, and the power of leadership. About how the presence of a single person can transform an entire community. And how the meaning of our deepest decisions often only becomes clear years later – if ever at all.<br><br>
+      This is a novel about competition, destiny, and what it truly means to be a winner.`,
+      "nav-home": "Home",
+      "nav-author": "About the Author",
+      "nav-contact": "Contact",
+      "nav-order": "Order Now",
+      "order-button": "Order Now"
+    };
+
+    function switchLanguage(lang) {
+      const text = lang === 'hu' ? huText : enText;
+      for (let key in text) {
+        const el = document.getElementById(key);
+        if (el) el.innerHTML = text[key];
+      }
+      document.getElementById('flag-hu').classList.toggle('active', lang === 'hu');
+      document.getElementById('flag-en').classList.toggle('active', lang === 'en');
+    }
 
     function toggleMenu() {
-      nav.classList.toggle("show");
+      const menu = document.getElementById('menu');
+      menu.classList.toggle('show');
     }
 
-    function showPage(page) {
-      document.getElementById("main").style.display = page === "main" ? "block" : "none";
-      document.getElementById("author").style.display = page === "author" ? "block" : "none";
-      document.getElementById("contact").style.display = page === "contact" ? "block" : "none";
-      toggleMenu();
+    function navigate(section) {
+      alert(`Navigating to: ${section}`);
     }
-  </script></body></html>
+  </script></body>
+</html>
