@@ -10,6 +10,8 @@
       font-family: Arial, sans-serif;
       background-color: black;
       color: white;
+      position: relative;
+      min-height: 100vh;
     }
     header {
       padding: 1rem;
@@ -17,120 +19,173 @@
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid gray;
+      position: relative;
+      z-index: 10;
+    }
+    .hamburger {
+      cursor: pointer;
+      font-size: 1.5rem;
+      user-select: none;
+    }
+    nav {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: rgba(0,0,0,0.9);
+      display: none;
+      flex-direction: column;
+      padding: 1rem 0;
+      z-index: 9;
     }
     nav a {
-      margin: 0 1rem;
+      padding: 0.5rem 1rem;
       text-decoration: none;
       color: white;
       font-weight: bold;
-      cursor: pointer;
+    }
+    nav a:hover {
+      background-color: #333;
+    }
+    nav.show {
+      display: flex;
+    }
+    .language-switch {
+      display: flex;
+      gap: 10px;
     }
     .language-switch span {
       cursor: pointer;
-      font-size: 1.5rem;
-      margin-left: 1rem;
+      font-size: 1.8rem;
+      user-select: none;
     }
-    .lang {
-      display: none;
+    main {
+      padding: 1rem;
+      max-width: 600px;
+      margin: auto;
+      position: relative;
+      z-index: 1;
     }
-    .active-lang {
+    .book-description {
+      position: relative;
+      z-index: 2;
+      margin-bottom: 2rem;
+      background: rgba(0,0,0,0.6);
+      padding: 1rem;
+      border-radius: 8px;
+    }
+    .book-cover {
+      position: relative;
+      max-width: 300px;
+      margin: auto;
+      border-radius: 10px;
+      overflow: hidden;
+      filter: brightness(0.7);
+    }
+    .book-cover img {
+      width: 100%;
       display: block;
-      padding: 2rem;
     }
   </style>
 </head>
 <body>
   <header>
-    <nav>
-      <!-- Magyar menü -->
-      <a class="menu hu" data-target="home">Főoldal</a>
-      <a class="menu hu" data-target="author">A szerzőről</a>
-      <a class="menu hu" data-target="buy">Vásárlás</a>
-      <a class="menu hu" data-target="contact">Kapcsolat</a>
-
-      <!-- Angol menü -->
-      <a class="menu en" data-target="home">Home</a>
-      <a class="menu en" data-target="author">About the Author</a>
-      <a class="menu en" data-target="buy">Buy</a>
-      <a class="menu en" data-target="contact">Contact</a>
-    </nav>
-
+    <div class="hamburger" id="hamburger">&#9776;</div>
     <div class="language-switch">
       <span onclick="setLanguage('hu')">🇭🇺</span>
       <span onclick="setLanguage('en')">🇬🇧</span>
     </div>
   </header>
+  <nav id="menu">
+    <a href="#" data-target="home">Főoldal</a>
+    <a href="#" data-target="author">A szerzőről</a>
+    <a href="#" data-target="buy">Vásárlás</a>
+    <a href="#" data-target="contact">Kapcsolat</a>
+  </nav>
 
   <main>
-    <!-- Magyar tartalmak -->
-    <section id="home-hu" class="lang active-lang">
-      <h1>Az igazi győztesek</h1>
-      <p>Az Olympus Intézet futócsapatába bekerülni az egyik legkeményebb kihívás...</p>
+    <!-- Magyar tartalom -->
+    <section id="home-hu" class="content-lang">
+      <div class="book-description">
+        <h1>Az igazi győztesek</h1>
+        <p>Az Olympus Intézet futócsapatába bekerülni az egyik legkeményebb kihívás...</p>
+      </div>
+      <div class="book-cover">
+        <img src="borito.jpg" alt="Az igazi győztesek borító" />
+      </div>
     </section>
-    <section id="author-hu" class="lang">
+    <section id="author-hu" class="content-lang" style="display:none;">
       <h1>A szerzőről</h1>
       <p>Itt lesz a szerző bemutatása...</p>
     </section>
-    <section id="buy-hu" class="lang">
+    <section id="buy-hu" class="content-lang" style="display:none;">
       <h1>Vásárlás</h1>
       <p>Itt lesz a vásárlási információ...</p>
     </section>
-    <section id="contact-hu" class="lang">
+    <section id="contact-hu" class="content-lang" style="display:none;">
       <h1>Kapcsolat</h1>
       <p>Kapcsolati információ...</p>
     </section>
 
-    <!-- Angol tartalmak -->
-    <section id="home-en" class="lang">
-      <h1>The True Winners</h1>
-      <p>Getting into the Olympus Institute’s running team is one of the toughest challenges...</p>
+    <!-- Angol tartalom -->
+    <section id="home-en" class="content-lang" style="display:none;">
+      <div class="book-description">
+        <h1>The True Winners</h1>
+        <p>Getting into the Olympus Institute’s running team is one of the toughest challenges...</p>
+      </div>
+      <div class="book-cover">
+        <img src="cover.jpg" alt="The True Winners book cover" />
+      </div>
     </section>
-    <section id="author-en" class="lang">
+    <section id="author-en" class="content-lang" style="display:none;">
       <h1>About the Author</h1>
       <p>Here will be the author introduction...</p>
     </section>
-    <section id="buy-en" class="lang">
+    <section id="buy-en" class="content-lang" style="display:none;">
       <h1>Buy</h1>
       <p>Here will be the buying information...</p>
     </section>
-    <section id="contact-en" class="lang">
+    <section id="contact-en" class="content-lang" style="display:none;">
       <h1>Contact</h1>
       <p>Contact details here...</p>
     </section>
   </main>
 
   <script>
+    const hamburger = document.getElementById('hamburger');
+    const menu = document.getElementById('menu');
     let currentLang = 'hu';
     let currentSection = 'home';
 
+    hamburger.addEventListener('click', () => {
+      menu.classList.toggle('show');
+    });
+
     function setLanguage(lang) {
       currentLang = lang;
-      updateMenuAndContent();
+      updateContent();
+      menu.classList.remove('show');  // Menü bezárása váltás után
     }
 
-    // Menü kattintás figyelése és tartalom váltás
-    document.querySelectorAll('nav a').forEach(link => {
-      link.addEventListener('click', () => {
+    // Menü elemek kattintása
+    document.querySelectorAll('#menu a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
         currentSection = link.getAttribute('data-target');
-        updateMenuAndContent();
+        updateContent();
+        menu.classList.remove('show');
       });
     });
 
-    function updateMenuAndContent() {
-      // Menük mutatása nyelv szerint
-      document.querySelectorAll('.menu').forEach(menu => {
-        menu.style.display = menu.classList.contains(currentLang) ? 'inline' : 'none';
-      });
-
-      // Tartalmak mutatása nyelv és szekció szerint
-      document.querySelectorAll('.lang').forEach(section => {
+    function updateContent() {
+      document.querySelectorAll('.content-lang').forEach(section => {
         section.style.display = 'none';
       });
-      document.getElementById(`${currentSection}-${currentLang}`).style.display = 'block';
+      document.getElementById(currentSection + '-' + currentLang).style.display = 'block';
     }
 
-    // Alapértelmezett beállítás
-    updateMenuAndContent();
+    // Kezdeti megjelenítés
+    updateContent();
   </script>
 </body>
 </html>
