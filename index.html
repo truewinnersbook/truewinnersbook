@@ -1,84 +1,123 @@
-<!DOCTYPE html>
-<html lang="hu">
+<!DOCTYPE html><html lang="hu">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Az igazi győztesek</title>
   <style>
-    body {
+    * {
       margin: 0;
       padding: 0;
-      background-image: url('borito.png');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
+      box-sizing: border-box;
       font-family: Arial, sans-serif;
-      color: white;
-      text-shadow: 1px 1px 2px black;
     }
-
-    .overlay {
+    body {
+      background: url('borito.png') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
       background-color: rgba(0, 0, 0, 0.6);
-      min-height: 100vh;
-      padding: 50px 20px;
+    }
+    .menu-icon, .language, .buy-button {
       display: flex;
       align-items: center;
-      justify-content: center;
     }
-
+    .menu-icon {
+      cursor: pointer;
+      font-size: 24px;
+      color: white;
+    }
+    .buy-button button {
+      background-color: yellow;
+      color: black;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px;
+      margin: 0 10px;
+    }
+    .language img {
+      width: 30px;
+      height: 20px;
+      margin-left: 10px;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+    .language img.active {
+      border-color: yellow;
+    }
     .content {
-      max-width: 700px;
+      padding: 40px 20px;
       background-color: rgba(0, 0, 0, 0.6);
-      padding: 40px;
+      max-width: 800px;
+      margin: 100px auto 0;
       border-radius: 10px;
     }
-
-    h1 {
-      font-size: 36px;
-      margin-bottom: 20px;
-    }
-
-    p {
-      font-size: 18px;
-      line-height: 1.6;
-    }
-
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
       .content {
-        padding: 20px;
-      }
-
-      h1 {
-        font-size: 28px;
-      }
-
-      p {
-        font-size: 16px;
+        margin: 80px 10px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="overlay">
-    <div class="content">
-      <h1>Az igazi győztesek</h1>
-      <p>
-        Az Olympus Intézet futócsapatába bekerülni az ország egyik legkeményebb kihívása.
-        A verseny szoros, a tét hatalmas: csak az maradhat talpon, aki bírja fizikailag és lelkileg is.
-        A fiatal atléták nemcsak az idővel, hanem egymással, az elvárásokkal és saját belső korlátaikkal is megküzdenek.
-      </p>
-      <p>
-        Egy váratlan jelentkező felkavarja az állóvizet. Egy döntés, amit senki sem ért, ösztönből születik – és mindent megváltoztat.
-        Az edzők, a csapattársak, a rendszer: mindenki válaszúthoz érkezik.
-      </p>
-      <p>
-        Ez a történet a küzdelemről, az összetartozásról és a vezetés erejéről szól. Arról, hogyan formálhat át egyetlen ember jelenléte egy egész közösséget.
-        És hogy a legmélyebb döntéseink értelmét sokszor csak évekkel később érthetjük meg – ha egyáltalán valaha megértjük azt.
-      </p>
-      <p>
-        Ez egy regény versenyről, sorsokról és arról, mi tesz valakit igazi győztessé.
-      </p>
+  <header>
+    <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+    <div class="buy-button">
+      <button id="buyButton">Vásárlás</button>
     </div>
-  </div>
-</body>
+    <div class="language">
+      <img src="https://flagcdn.com/hu.svg" id="hu" onclick="switchLang('hu')" class="active" alt="Magyar" />
+      <img src="https://flagcdn.com/gb.svg" id="en" onclick="switchLang('en')" alt="English" />
+    </div>
+  </header>  <div class="content">
+    <p id="description">
+      Az Olympus Intézet futócsapatába bekerülni az ország egyik legkeményebb kihívása. A verseny szoros, a tét hatalmas: csak az maradhat talpon, aki bíra fizikailag és lelkileg is. A fiatal atléták nemcsak az idővel, hanem egymással, az elvárásokkal és saját belső korlátaikkal is megküzdenek.Egy váratlan jelentkező felkavarja az állóvizet. Egy döntés, amit senki sem ért, ösztönből születik – és mindent megváltoztat. Az edzők, a csapattársak, a rendszer: mindenki válaszúthoz érkezik.
+
+  Ez a történet a küzdelemről, az összetartozásról és a vezetés erejéről szól. Arról, hogyan formálhat át egyetlen ember jelenléte egy egész közösséget. És hogy a legmélyebb döntéseink értelmét sokszor csak évekkel később érthetjük meg – ha egyáltalán valaha megértjük azt.
+
+  Ez egy regény versenyről, sorsokról és arról, mi tesz valakit igazi győztessé.
+</p>
+
+  </div>  <script>
+    function switchLang(lang) {
+      const huFlag = document.getElementById('hu');
+      const enFlag = document.getElementById('en');
+      const description = document.getElementById('description');
+      const buyButton = document.getElementById('buyButton');
+
+      if (lang === 'hu') {
+        description.innerText = `Az Olympus Intézet futócsapatába bekerülni az ország egyik legkeményebb kihívása. A verseny szoros, a tét hatalmas: csak az maradhat talpon, aki bírja fizikailag és lelkileg is. A fiatal atléták nemcsak az idővel, hanem egymással, az elvárásokkal és saját belső korlátaikkal is megküzdenek.
+
+Egy váratlan jelentkező felkavarja az állóvizet. Egy döntés, amit senki sem ért, ösztönből születik – és mindent megváltoztat. Az edzők, a csapattársak, a rendszer: mindenki válaszúthoz érkezik.
+
+Ez a történet a küzdelemről, az összetartozásról és a vezetés erejéről szól. Arról, hogyan formálhat át egyetlen ember jelenléte egy egész közösséget. És hogy a legmélyebb döntéseink értelmét sokszor csak évekkel később érthetjük meg – ha egyáltalán valaha megértjük azt.
+
+Ez egy regény versenyről, sorsokról és arról, mi tesz valakit igazi győztessé.`;
+        buyButton.innerText = 'Vásárlás';
+        huFlag.classList.add('active');
+        enFlag.classList.remove('active');
+      } else {
+        description.innerText = `Getting into the Olympus Institute running team is one of the toughest challenges in the country. The competition is tight, the stakes are high: only those who can endure both physically and mentally will survive. Young athletes must fight not only against time, but also against each other, expectations, and their own inner limits.
+
+An unexpected applicant stirs the waters. A decision born out of instinct that no one understands – and it changes everything. Coaches, teammates, the system: everyone faces a turning point.
+
+This story is about struggle, belonging, and the power of leadership. How one person’s presence can transform an entire community. And how the true meaning of our deepest decisions often only becomes clear years later – if we ever understand them at all.
+
+It’s a novel about competition, destiny, and what makes someone a true winner.`;
+        buyButton.innerText = 'Buy';
+        enFlag.classList.add('active');
+        huFlag.classList.remove('active');
+      }
+    }
+
+    function toggleMenu() {
+      alert("Hamburger menü megnyitása itt majd külön oldalakra vezethet.");
+    }
+  </script></body>
 </html>
