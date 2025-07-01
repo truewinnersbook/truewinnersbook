@@ -3,189 +3,262 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Az igazi győztesek – A könyv hivatalos oldala</title>
+  <title>Az igazi győztesek - könyv</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: black;
+      background: black;
       color: white;
-      position: relative;
+      display: flex;
+      flex-direction: column;
       min-height: 100vh;
     }
     header {
-      padding: 1rem;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid gray;
-      position: relative;
-      z-index: 10;
+      justify-content: space-between;
+      padding: 0.8rem 1rem;
+      background: #111;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
-    .hamburger {
-      cursor: pointer;
-      font-size: 1.5rem;
-      user-select: none;
-    }
-    nav {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background-color: rgba(0,0,0,0.9);
+    /* Hamburger menu */
+    #menuToggle {
       display: none;
-      flex-direction: column;
-      padding: 1rem 0;
-      z-index: 9;
+    }
+    label[for="menuToggle"] {
+      cursor: pointer;
+      width: 30px;
+      height: 25px;
+      position: relative;
+      display: inline-block;
+      margin-right: 1rem;
+    }
+    label[for="menuToggle"] span {
+      background: white;
+      display: block;
+      position: absolute;
+      height: 4px;
+      width: 100%;
+      border-radius: 2px;
+      opacity: 1;
+      left: 0;
+      transition: all 0.25s ease-in-out;
+    }
+    label[for="menuToggle"] span:nth-child(1) {
+      top: 0;
+    }
+    label[for="menuToggle"] span:nth-child(2) {
+      top: 10px;
+    }
+    label[for="menuToggle"] span:nth-child(3) {
+      top: 20px;
+    }
+    #menuToggle:checked + label span:nth-child(1) {
+      top: 10px;
+      transform: rotate(45deg);
+    }
+    #menuToggle:checked + label span:nth-child(2) {
+      opacity: 0;
+    }
+    #menuToggle:checked + label span:nth-child(3) {
+      top: 10px;
+      transform: rotate(-45deg);
+    }
+
+    /* Menüpontok mobilon (lenyíló) */
+    nav {
+      position: fixed;
+      top: 56px;
+      left: -200px;
+      width: 180px;
+      background: #222;
+      height: calc(100% - 56px);
+      padding: 1rem;
+      box-sizing: border-box;
+      transition: left 0.3s ease;
+      z-index: 99;
+    }
+    #menuToggle:checked ~ nav {
+      left: 0;
     }
     nav a {
-      padding: 0.5rem 1rem;
-      text-decoration: none;
+      display: block;
       color: white;
+      text-decoration: none;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #444;
       font-weight: bold;
     }
     nav a:hover {
-      background-color: #333;
+      background: #333;
     }
-    nav.show {
-      display: flex;
+
+    /* Vásárlás gomb */
+    .buy-button {
+      background: #f1c40f;
+      color: black;
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      white-space: nowrap;
+      margin-right: 1rem;
+      transition: background 0.3s ease;
     }
-    .language-switch {
+    .buy-button:hover {
+      background: #d4ac0d;
+    }
+
+    /* Zászlók */
+    .flags {
       display: flex;
       gap: 10px;
     }
-    .language-switch span {
+    .flag {
       cursor: pointer;
-      font-size: 1.8rem;
-      user-select: none;
+      width: 28px;
+      height: 20px;
+      border: 2px solid transparent;
+      border-radius: 3px;
+      transition: border-color 0.3s ease;
     }
+    .flag.selected {
+      border-color: #f1c40f;
+    }
+
+    /* Fő tartalom */
     main {
-      padding: 1rem;
-      max-width: 600px;
-      margin: auto;
-      position: relative;
-      z-index: 1;
+      flex-grow: 1;
+      padding: 1.5rem;
+      max-width: 720px;
+      margin: 0 auto;
     }
-    .book-description {
-      position: relative;
-      z-index: 2;
-      margin-bottom: 2rem;
-      background: rgba(0,0,0,0.6);
-      padding: 1rem;
+    main h1 {
+      margin-top: 0;
+      font-size: 2rem;
+    }
+    main img.cover {
+      max-width: 100%;
+      margin-top: 1rem;
       border-radius: 8px;
+      filter: brightness(0.5);
     }
-    .book-cover {
-      position: relative;
-      max-width: 300px;
-      margin: auto;
-      border-radius: 10px;
-      overflow: hidden;
-      filter: brightness(0.7);
+    main p.description {
+      margin-top: 1rem;
+      line-height: 1.4;
     }
-    .book-cover img {
-      width: 100%;
-      display: block;
+
+    /* PC nézet */
+    @media (min-width: 768px) {
+      nav {
+        position: static;
+        width: auto;
+        height: auto;
+        padding: 0;
+        background: none;
+        display: flex;
+        gap: 2rem;
+        left: auto !important;
+        flex-grow: 1;
+      }
+      nav a {
+        border-bottom: none;
+        padding: 0;
+        font-weight: normal;
+      }
+      label[for="menuToggle"], #menuToggle {
+        display: none;
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    <div class="hamburger" id="hamburger">&#9776;</div>
-    <div class="language-switch">
-      <span onclick="setLanguage('hu')">🇭🇺</span>
-      <span onclick="setLanguage('en')">🇬🇧</span>
+    <input type="checkbox" id="menuToggle" />
+    <label for="menuToggle" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+
+    <nav id="menu">
+      <a href="#home" class="menu-link" data-key="home">Főoldal</a>
+      <a href="#author" class="menu-link" data-key="author">A szerzőről</a>
+      <a href="#contact" class="menu-link" data-key="contact">Kapcsolat</a>
+    </nav>
+
+    <button class="buy-button" id="buyBtn">Vásárlás</button>
+
+    <div class="flags">
+      <img src="https://flagcdn.com/h20/hu.png" alt="Magyar" class="flag selected" id="flag-hu" />
+      <img src="https://flagcdn.com/h20/gb.png" alt="English" class="flag" id="flag-en" />
     </div>
   </header>
-  <nav id="menu">
-    <a href="#" data-target="home">Főoldal</a>
-    <a href="#" data-target="author">A szerzőről</a>
-    <a href="#" data-target="buy">Vásárlás</a>
-    <a href="#" data-target="contact">Kapcsolat</a>
-  </nav>
 
   <main>
-    <!-- Magyar tartalom -->
-    <section id="home-hu" class="content-lang">
-      <div class="book-description">
-        <h1>Az igazi győztesek</h1>
-        <p>Az Olympus Intézet futócsapatába bekerülni az egyik legkeményebb kihívás...</p>
-      </div>
-      <div class="book-cover">
-        <img src="borito.jpg" alt="Az igazi győztesek borító" />
-      </div>
-    </section>
-    <section id="author-hu" class="content-lang" style="display:none;">
-      <h1>A szerzőről</h1>
-      <p>Itt lesz a szerző bemutatása...</p>
-    </section>
-    <section id="buy-hu" class="content-lang" style="display:none;">
-      <h1>Vásárlás</h1>
-      <p>Itt lesz a vásárlási információ...</p>
-    </section>
-    <section id="contact-hu" class="content-lang" style="display:none;">
-      <h1>Kapcsolat</h1>
-      <p>Kapcsolati információ...</p>
-    </section>
-
-    <!-- Angol tartalom -->
-    <section id="home-en" class="content-lang" style="display:none;">
-      <div class="book-description">
-        <h1>The True Winners</h1>
-        <p>Getting into the Olympus Institute’s running team is one of the toughest challenges...</p>
-      </div>
-      <div class="book-cover">
-        <img src="cover.jpg" alt="The True Winners book cover" />
-      </div>
-    </section>
-    <section id="author-en" class="content-lang" style="display:none;">
-      <h1>About the Author</h1>
-      <p>Here will be the author introduction...</p>
-    </section>
-    <section id="buy-en" class="content-lang" style="display:none;">
-      <h1>Buy</h1>
-      <p>Here will be the buying information...</p>
-    </section>
-    <section id="contact-en" class="content-lang" style="display:none;">
-      <h1>Contact</h1>
-      <p>Contact details here...</p>
-    </section>
+    <h1 id="title">Az igazi győztesek</h1>
+    <p class="description" id="description">
+      Az Olympus Intézet futócsapatába bekerülni az egyik legkeményebb kihívás...
+    </p>
+    <img src="borito.jpg" alt="Az igazi győztesek borító" class="cover" />
   </main>
 
   <script>
-    const hamburger = document.getElementById('hamburger');
-    const menu = document.getElementById('menu');
-    let currentLang = 'hu';
-    let currentSection = 'home';
+    const texts = {
+      hu: {
+        menu: {
+          home: "Főoldal",
+          author: "A szerzőről",
+          contact: "Kapcsolat",
+          buy: "Vásárlás"
+        },
+        title: "Az igazi győztesek",
+        description: "Az Olympus Intézet futócsapatába bekerülni az egyik legkeményebb kihívás. Csak az maradhat talpon, aki bírja fizikailag és lelkileg is. Egy váratlan jelentkező felkavarja az állóvizet, és mindent megváltoztat."
+      },
+      en: {
+        menu: {
+          home: "Home",
+          author: "About the author",
+          contact: "Contact",
+          buy: "Buy the book"
+        },
+        title: "True Winners",
+        description: "Joining the Olympus Institute running team is one of the toughest challenges. Only those who endure physically and mentally survive. An unexpected candidate stirs the waters and changes everything."
+      }
+    };
 
-    hamburger.addEventListener('click', () => {
-      menu.classList.toggle('show');
-    });
+    const flags = document.querySelectorAll(".flag");
+    const menuLinks = document.querySelectorAll(".menu-link");
+    const buyBtn = document.getElementById("buyBtn");
+    const titleEl = document.getElementById("title");
+    const descEl = document.getElementById("description");
 
-    function setLanguage(lang) {
-      currentLang = lang;
-      updateContent();
-      menu.classList.remove('show');  // Menü bezárása váltás után
-    }
+    flags.forEach(flag => {
+      flag.addEventListener("click", () => {
+        // Toggle selected class
+        flags.forEach(f => f.classList.remove("selected"));
+        flag.classList.add("selected");
 
-    // Menü elemek kattintása
-    document.querySelectorAll('#menu a').forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        currentSection = link.getAttribute('data-target');
-        updateContent();
-        menu.classList.remove('show');
+        const lang = flag.id === "flag-hu" ? "hu" : "en";
+
+        // Update menu
+        menuLinks.forEach(link => {
+          const key = link.getAttribute("data-key");
+          link.textContent = texts[lang].menu[key];
+        });
+
+        // Update buy button
+        buyBtn.textContent = texts[lang].menu.buy;
+
+        // Update main title and description
+        titleEl.textContent = texts[lang].title;
+        descEl.textContent = texts[lang].description;
       });
     });
-
-    function updateContent() {
-      document.querySelectorAll('.content-lang').forEach(section => {
-        section.style.display = 'none';
-      });
-      document.getElementById(currentSection + '-' + currentLang).style.display = 'block';
-    }
-
-    // Kezdeti megjelenítés
-    updateContent();
   </script>
 </body>
 </html>
