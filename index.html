@@ -1,100 +1,136 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Az igazi győztesek – könyv</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Az igazi győztesek – A könyv hivatalos oldala</title>
   <style>
     body {
       margin: 0;
-      font-family: sans-serif;
+      font-family: Arial, sans-serif;
+      background-color: black;
       color: white;
-      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://i.imgur.com/WYuWZTw.jpeg') no-repeat center center fixed;
-      background-size: cover;
     }
     header {
-      padding: 2rem;
-      text-align: center;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid gray;
     }
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-    }
-    nav {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    button {
-      margin: 0.5rem;
-      padding: 0.5rem 1rem;
-      border: none;
-      background: #ffffff44;
+    nav a {
+      margin: 0 1rem;
+      text-decoration: none;
       color: white;
       font-weight: bold;
       cursor: pointer;
     }
-    main {
-      max-width: 800px;
-      margin: auto;
-      padding: 1rem 2rem;
-      background-color: rgba(0, 0, 0, 0.5);
-      border-radius: 1rem;
+    .language-switch span {
+      cursor: pointer;
+      font-size: 1.5rem;
+      margin-left: 1rem;
     }
-    .lang { display: none; }
-    .visible { display: block; }
-    a {
-      color: #ffd700;
-      font-weight: bold;
+    .lang {
+      display: none;
+    }
+    .active-lang {
+      display: block;
+      padding: 2rem;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Az igazi győztesek – A nehézségeken átvezető kitartás útja</h1>
+    <nav>
+      <!-- Magyar menü -->
+      <a class="menu hu" data-target="home">Főoldal</a>
+      <a class="menu hu" data-target="author">A szerzőről</a>
+      <a class="menu hu" data-target="buy">Vásárlás</a>
+      <a class="menu hu" data-target="contact">Kapcsolat</a>
+
+      <!-- Angol menü -->
+      <a class="menu en" data-target="home">Home</a>
+      <a class="menu en" data-target="author">About the Author</a>
+      <a class="menu en" data-target="buy">Buy</a>
+      <a class="menu en" data-target="contact">Contact</a>
+    </nav>
+
+    <div class="language-switch">
+      <span onclick="setLanguage('hu')">🇭🇺</span>
+      <span onclick="setLanguage('en')">🇬🇧</span>
+    </div>
   </header>
 
-  <nav>
-    <button onclick="showLang('hu')">🇭🇺 Magyar</button>
-    <button onclick="showLang('en')">🇬🇧 English</button>
-  </nav>
-
   <main>
-    <div id="hu" class="lang visible">
-      <p>
-        Az Olympus Intézet futócsapatába bekerülni az ország egyik legkeményebb kihívása. A verseny szoros, a tét hatalmas: csak az maradhat talpon, aki bírja fizikailag és lelkileg is. A fiatal atléták nemcsak az idővel, hanem egymással, az elvárásokkal és saját belső korlátaikkal is megküzdenek.
-      </p>
-      <p>
-        Egy váratlan jelentkező felkavarja az állóvizet. Egy döntés, amit senki sem ért, ösztönből születik – és mindent megváltoztat. Az edzők, a csapattársak, a rendszer: mindenki válaszúthoz érkezik.
-      </p>
-      <p>
-        Ez a történet a küzdelemről, az összetartozásról és a vezetés erejéről szól. Arról, hogyan formálhat át egyetlen ember jelenléte egy egész közösséget. És hogy a legmélyebb döntéseink értelmét sokszor csak évekkel később érthetjük meg – ha egyáltalán valaha megértjük azt.
-      </p>
-      <p>
-        Ez egy regény versenyről, sorsokról és arról, mi tesz valakit igazi győztessé.
-      </p>
-    </div>
+    <!-- Magyar tartalmak -->
+    <section id="home-hu" class="lang active-lang">
+      <h1>Az igazi győztesek</h1>
+      <p>Az Olympus Intézet futócsapatába bekerülni az egyik legkeményebb kihívás...</p>
+    </section>
+    <section id="author-hu" class="lang">
+      <h1>A szerzőről</h1>
+      <p>Itt lesz a szerző bemutatása...</p>
+    </section>
+    <section id="buy-hu" class="lang">
+      <h1>Vásárlás</h1>
+      <p>Itt lesz a vásárlási információ...</p>
+    </section>
+    <section id="contact-hu" class="lang">
+      <h1>Kapcsolat</h1>
+      <p>Kapcsolati információ...</p>
+    </section>
 
-    <div id="en" class="lang">
-      <p>
-        Getting into the Olympus Institute’s running team is one of the toughest challenges in the country. The competition is fierce, and the stakes are high: only those who are strong enough, both physically and mentally, will make it. These young athletes must battle not only time, but each other, the expectations—and their own internal limits.
-      </p>
-      <p>
-        A sudden applicant shakes everything up. A decision no one understands is made purely from instinct—and changes everything. Coaches, teammates, the system itself—all are forced to make a choice.
-      </p>
-      <p>
-        This is a story about struggle, belonging, and the power of leadership. About how the presence of one person can transform an entire community. And how the meaning of our deepest decisions is often only understood years later—if ever.
-      </p>
-      <p>
-        This is a novel about competition, destiny, and what it truly means to be a winner.
-      </p>
-    </div>
+    <!-- Angol tartalmak -->
+    <section id="home-en" class="lang">
+      <h1>The True Winners</h1>
+      <p>Getting into the Olympus Institute’s running team is one of the toughest challenges...</p>
+    </section>
+    <section id="author-en" class="lang">
+      <h1>About the Author</h1>
+      <p>Here will be the author introduction...</p>
+    </section>
+    <section id="buy-en" class="lang">
+      <h1>Buy</h1>
+      <p>Here will be the buying information...</p>
+    </section>
+    <section id="contact-en" class="lang">
+      <h1>Contact</h1>
+      <p>Contact details here...</p>
+    </section>
   </main>
 
   <script>
-    function showLang(lang) {
-      document.querySelectorAll('.lang').forEach(el => el.classList.remove('visible'));
-      document.getElementById(lang).classList.add('visible');
+    let currentLang = 'hu';
+    let currentSection = 'home';
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      updateMenuAndContent();
     }
+
+    // Menü kattintás figyelése és tartalom váltás
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        currentSection = link.getAttribute('data-target');
+        updateMenuAndContent();
+      });
+    });
+
+    function updateMenuAndContent() {
+      // Menük mutatása nyelv szerint
+      document.querySelectorAll('.menu').forEach(menu => {
+        menu.style.display = menu.classList.contains(currentLang) ? 'inline' : 'none';
+      });
+
+      // Tartalmak mutatása nyelv és szekció szerint
+      document.querySelectorAll('.lang').forEach(section => {
+        section.style.display = 'none';
+      });
+      document.getElementById(`${currentSection}-${currentLang}`).style.display = 'block';
+    }
+
+    // Alapértelmezett beállítás
+    updateMenuAndContent();
   </script>
 </body>
 </html>
