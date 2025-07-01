@@ -3,59 +3,63 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>True Winners Book</title>
+  <title>Az igazi győztesek</title>
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:sans-serif; background:#000; color:#fff; }
+    body { font-family:sans-serif; color:#fff; }
     header {
-      display:flex; align-items:center; justify-content:space-between;
-      padding:1rem; background:rgba(0,0,0,0.6);
-      position:fixed; top:0; left:0; right:0; z-index:10;
+      position:fixed; top:0; left:0; right:0; height:60px;
+      background:rgba(0,0,0,0.6); display:flex;
+      align-items:center; justify-content:space-between;
+      padding:0 1rem; z-index:10;
     }
-    header button, header .lang, header .hamburger {
-      background:none; border:none; cursor:pointer; color:#fff; font-size:1.2rem;
+    header .hamburger, header .order, header .lang img {
+      background:none; border:none; cursor:pointer; color:#fff;
     }
     header .order {
       background:#ff0; color:#000; padding:0.5rem 1rem; border-radius:4px;
     }
-    header .lang img { width:24px; margin-left:0.5rem; cursor:pointer; }
+    header .lang img { width:24px; margin-left:0.5rem; }
 
-    main { padding-top:5rem; }
+    main { padding-top:60px; }
 
-    /* --- itt jön az új home háttér --- */
+    /* Home háttér */
     #home {
-      background: url('borito.png') center/cover no-repeat fixed;
-      position:relative;
+      display:flex; align-items:center; justify-content:center;
       min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      background:url('borito.png') center/cover no-repeat fixed;
     }
     #home .panel {
-      max-width:600px; padding:2rem; background:rgba(0,0,0,0.7);
-      border-radius:8px; text-align:justify; text-align-last:left;
+      max-width:600px; padding:2rem;
+      background:rgba(0,0,0,0.7); border-radius:8px;
+      text-align:justify; text-align-last:left;
     }
-    /* ---------------------------------- */
 
-    .panel h1 { margin-bottom:1rem; font-size:2rem; text-align:center; }
-    .panel img { width:100%; border-radius:8px; margin-bottom:1rem; }
+    /* A többi oldal */
+    section.panel {
+      display:none;
+      max-width:600px; margin:2rem auto;
+      padding:2rem; background:#202020; border-radius:8px;
+      text-align:justify; text-align-last:left;
+    }
+    section.panel h1 { margin-bottom:1rem; text-align:center; }
 
-    /* Overlay */
-    .overlay {
-      display:none; position:fixed; top:0; left:0; right:0; bottom:0;
-      background:rgba(0,0,0,0.8); color:#fff; z-index:20;
+    /* Overlay menu */
+    #overlay {
+      display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8);
+      color:#fff; z-index:20; flex-direction:column;
       backdrop-filter:blur(4px);
-      flex-direction:column;
     }
-    .overlay .menu {
-      margin-top:4rem; list-style:none; text-align:center;
+    #overlay ul {
+      list-style:none; margin-top:4rem; text-align:center; padding:0;
     }
-    .overlay .menu li {
+    #overlay ul li {
       padding:1rem 0; border-bottom:1px solid rgba(255,255,255,0.2);
     }
-    .overlay .menu li:last-child { border:none; }
-    .overlay .menu li button {
-      background:none; border:none; color:#fff; font-size:1.2rem; cursor:pointer;
+    #overlay ul li:last-child { border:none; }
+    #overlay ul li button {
+      background:none; border:none; color:#fff; font-size:1.2rem;
+      cursor:pointer;
     }
   </style>
 </head>
@@ -63,19 +67,20 @@
 
   <header>
     <button class="hamburger" onclick="toggleMenu()">☰</button>
-    <button class="order" onclick="alert(currentTexts.orderAlert)">{{orderText}}</button>
+    <button class="order" onclick="alert('Köszönjük a megrendelést! Hamarosan jelentkezünk.')">Megrendelés</button>
     <div class="lang">
-      <img src="hu.gif" alt="HU" onclick="setLang('hu')">
-      <img src="En.png" alt="EN" onclick="setLang('en')">
+      <img src="hu.gif" alt="HU" onclick="setHomeHU()">
+      <img src="En.png" alt="EN" onclick="setHomeEN()">
     </div>
   </header>
 
-  <div class="overlay" id="overlay">
-    <ul class="menu">
-      <li><button onclick="showPage('home')">{{texts.home}}</button></li>
-      <li><button onclick="showPage('author')">{{texts.about}}</button></li>
-      <li><button onclick="showPage('contact')">{{texts.contact}}</button></li>
-      <li><button onclick="showPage('order')">{{texts.order}}</button></li>
+  <!-- Overlay -->
+  <div id="overlay" style="display:flex;flex-direction:column;">
+    <ul>
+      <li><button onclick="show('home')">Főoldal</button></li>
+      <li><button onclick="show('author')">A szerzőről</button></li>
+      <li><button onclick="show('contact')">Kapcsolat</button></li>
+      <li><button onclick="show('order')">Megrendelés</button></li>
     </ul>
   </div>
 
@@ -83,79 +88,73 @@
     <!-- Főoldal -->
     <section id="home">
       <div class="panel">
-        <h1>{{texts.title}}</h1>
-        <p>{{texts.homeText}}</p>
+        <h1>Az igazi győztesek</h1>
+        <p>
+          Az Olympus Intézet futócsapatába bekerülni az ország egyik legkeményebb kihívása.
+          A verseny szoros, a tét hatalmas: csak az maradhat talpon, aki bírja fizikailag és lelkileg is.
+          A fiatal atléták nemcsak az idővel, hanem egymással, az elvárásokkal és saját belső korlátaikkal is megküzdenek.
+          Egy váratlan jelentkező felkavarja az állóvizet. Egy döntés, amit senki sem ért, ösztönből születik – és mindent megváltoztat.
+          Ez a történet a küzdelemről, az összetartozásról és a vezetés erejéről szól.
+        </p>
       </div>
     </section>
 
     <!-- A szerzőről -->
-    <section id="author" class="panel" style="display:none; background:#202020;">
-      <h1>{{texts.about}}</h1>
-      <img src="szerzo.jpg" alt="Szerző">
-      <p>{{texts.authorText}}</p>
+    <section id="author" class="panel">
+      <h1>A szerzőről</h1>
+      <img src="szerzo.jpg" alt="Szerző" style="width:100%;border-radius:8px;margin-bottom:1rem;">
+      <p>
+        Hudák Olivér természetközeli környezetben nőtt fel, ahol már fiatal korától különleges figyelemmel fordult a világ részletei felé.
+        Megérintették a táj színei, a fények és árnyékok játéka, a formák harmóniája.
+        A képi világ iránti vonzalma korán kialakult, és azóta is végigkíséri alkotói útján.
+        Érdeklődése a film, a fotó és a festészet mellett a zene és dalszerzés irányába is kiterjed,
+        ezek számára nemcsak kifejezőeszközök, hanem a belső világ megjelenítésének természetes formái.
+      </p>
     </section>
 
     <!-- Kapcsolat -->
-    <section id="contact" class="panel" style="display:none; background:#202020;">
-      <h1>{{texts.contact}}</h1>
+    <section id="contact" class="panel">
+      <h1>Kapcsolat</h1>
       <p>Email: info@truewinnersbook.com</p>
       <p>Telefon: 06 70 529 85 94</p>
     </section>
 
     <!-- Megrendelés -->
-    <section id="order" class="panel" style="display:none; background:#202020;">
-      <h1>{{texts.order}}</h1>
-      <p>{{texts.orderText}}</p>
+    <section id="order" class="panel">
+      <h1>Megrendelés</h1>
+      <p>A könyvet itt tudod megrendelni: info@truewinnersbook.com</p>
     </section>
   </main>
 
   <script>
-    const localeData = {
-      hu: {
-        texts: { /* ... ugyanaz, mint az előző verzióban ... */ },
-        orderAlert: 'Köszönjük a megrendelést! Hamarosan jelentkezünk.',
-      },
-      en: {
-        texts: { /* ... ugyanaz, mint az előző verzióban ... */ },
-        orderAlert: 'Thank you for your order! We will get back to you soon.',
-      }
-    };
-    let currentLang = 'hu', texts = localeData.hu.texts, currentTexts = localeData.hu;
-
-    function setLang(lang) {
-      currentLang = lang; texts = localeData[lang].texts; currentTexts = localeData[lang];
-      document.querySelector('header .order').textContent = texts.order;
-      document.querySelectorAll('.lang img').forEach(img=>{
-        img.style.outline = img.alt.toLowerCase()===lang ? '2px solid #ff0' : 'none';
-      });
-      document.querySelectorAll('.overlay .menu li button').forEach((btn,i)=>{
-        ['home','about','contact','order'].forEach((key,j)=>{
-          if(j===i) btn.textContent = texts[key];
-        });
-      });
-      // Sections
-      document.querySelector('#home h1').textContent = texts.title;
-      document.querySelector('#home p').textContent = texts.homeText;
-      document.querySelector('#author h1').textContent = texts.about;
-      document.querySelector('#author p').textContent = texts.authorText;
-      document.querySelector('#contact h1').textContent = texts.contact;
-      document.querySelector('#order h1').textContent = texts.order;
-      document.querySelector('#order p').textContent = texts.orderText;
+    function toggleMenu(){
+      const ov = document.getElementById('overlay');
+      ov.style.display = ov.style.display==='flex' ? 'none' : 'flex';
     }
-
-    function toggleMenu() {
-      const o = document.getElementById('overlay');
-      o.style.display = o.style.display==='flex' ? 'none' : 'flex';
-    }
-
-    function showPage(id) {
+    function show(id){
       toggleMenu();
       document.querySelectorAll('main section').forEach(sec=>{
-        sec.style.display = sec.id===id ? (id==='home'?'flex':'block') : 'none';
+        sec.style.display = sec.id===id ? '' : 'none';
       });
     }
-    // init
-    setLang('hu');
+    function setHomeHU(){
+      show('home');
+      document.querySelector('section#home h1').textContent = 'Az igazi győztesek';
+      document.querySelector('section#home p').textContent = 
+        'Az Olympus Intézet futócsapatába bekerülni az ország egyik legkeményebb kihívása. A verseny szoros, a tét hatalmas: csak az maradhat talpon, aki bírja fizikailag és lelkileg is. A fiatal atléták nemcsak az idővel, hanem egymással, az elvárásokkal és saját belső korlátaikkal is megküzdenek. Egy váratlan jelentkező felkavarja az állóvizet. Egy döntés, amit senki sem ért, ösztönből születik – és mindent megváltoztat. Ez a történet a küzdelemről, az összetartozásról és a vezetés erejéről szól.';
+    }
+    function setHomeEN(){
+      show('home');
+      document.querySelector('section#home h1').textContent = 'True Winners';
+      document.querySelector('section#home p').textContent = 
+        'Getting into the Olympus Institute running team is one of the toughest challenges in the country. The competition is fierce, the stakes are high: only those who can endure physically and mentally can survive. The young athletes struggle not only with time but also with each other, expectations, and their own inner limits. An unexpected applicant stirs the still waters. A decision, nobody understands, is born out of instinct – and changes everything. This story is about struggle, belonging, and the power of leadership.';
+    }
+
+    // Induláskor csak a home látszik
+    document.addEventListener('DOMContentLoaded', ()=>{
+      show('home');
+    });
   </script>
+
 </body>
 </html>
