@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="hu">
-<head>
+<!DOCTYPE html><html lang="hu"><head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Az igazi győztesek</title>
@@ -8,136 +7,145 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-    }
-    body {
-      font-family: Arial, sans-serif;
-      background: url('borito.png') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
-      min-height: 100vh;
-    }
-    .overlay {
-      background: rgba(0, 0, 0, 0.7);
-      padding: 2rem;
-      margin: 4rem auto;
-      max-width: 800px;
-      border-radius: 12px;
-    }
-    .menu-icon, .flag {
-      position: fixed;
-      top: 1rem;
-      z-index: 1000;
-    }
-    .menu-icon {
-      left: 1rem;
-      font-size: 2rem;
-      cursor: pointer;
-    }
-    .buy-button {
-      position: fixed;
-      top: 1rem;
-      left: 50%;
-      transform: translateX(-50%);
-      background: yellow;
-      color: black;
-      padding: 0.5rem 1rem;
-      font-weight: bold;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      z-index: 1000;
-    }
-    .flag {
-      width: 32px;
-      right: 1rem;
-    }
-    .flag.hu { right: 3.5rem; }
-    .menu {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #111;
-      color: white;
-      padding: 2rem;
-      z-index: 999;
-    }
-    .menu.active {
-      display: block;
-    }
-    .menu a {
-      display: block;
-      padding: 1rem 0;
-      color: white;
-      text-decoration: none;
-      border-bottom: 1px solid #444;
-    }
-    .author-page {
-      display: none;
-      padding: 2rem;
-      background: #111;
-      color: white;
-      min-height: 100vh;
-    }
-    .author-page.active {
-      display: block;
-    }
-    .author-photo {
-      max-width: 250px;
-      border-radius: 10px;
-      margin-bottom: 1rem;
-    }
-    .hamburger {
-      position: fixed;
-      top: 1rem;
-      left: 1rem;
-      font-size: 2rem;
-      z-index: 1001;
-      color: white;
-      cursor: pointer;
-    }
+    }body {
+  font-family: Arial, sans-serif;
+  color: white;
+  background-color: #000;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 10px 20px;
+  z-index: 999;
+}
+
+.menu-button {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.buy-button {
+  background: yellow;
+  color: black;
+  padding: 5px 15px;
+  font-weight: bold;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.flags img {
+  width: 30px;
+  height: 20px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+.main-content {
+  background-image: url("borito.png");
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  padding-top: 80px;
+  padding: 80px 20px 20px;
+}
+
+.description {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 700px;
+  margin: auto;
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 80%;
+  height: 100%;
+  background: #111;
+  transition: 0.3s;
+  padding: 60px 20px;
+  z-index: 1000;
+}
+
+nav a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  margin: 15px 0;
+  font-size: 18px;
+}
+
+nav.show {
+  left: 0;
+}
+
+.author-page,
+.contact-page {
+  display: none;
+  padding: 100px 20px 20px;
+  max-width: 800px;
+  margin: auto;
+  background-color: #111;
+  color: white;
+}
+
+.author-page img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
   </style>
-</head>
-<body>
-  <div class="menu-icon" onclick="toggleMenu()">☰</div>
-  <button class="buy-button">Buy</button>
-  <img src="flag-hu.png" class="flag hu" onclick="setLang('hu')" />
-  <img src="flag-en.png" class="flag" onclick="setLang('en')" />  <div id="menu" class="menu">
-    <a href="#" onclick="goTo('home')">Főoldal</a>
-    <a href="#" onclick="goTo('author')">A szerzőről</a>
-    <a href="#">Kapcsolat</a>
-    <a href="#">Könyvvásárlás</a>
-  </div>  <div id="home" class="overlay">
-    <h1>Az igazi győztesek</h1>
-    <p>Az Olympus Intézet futócsapatába bekerülni az ország egyik legkeményebb kihívása...</p>
-    <!-- Rövidített a példakedvéért -->
-  </div>  <div id="author" class="author-page">
-    <div class="hamburger" onclick="toggleMenu()">☰</div>
-    <img src="szerzo.jpg" alt="Hudák Olivér" class="author-photo">
-    <p>Hudák Olivér természetközeli környezetben nőtt fel, ahol már fiatal korától különleges figyelemmel fordult a világ részletei felé...</p>
-    <!-- Rövidített a példakedvéért -->
+</head><body>
+  <header>
+    <div class="menu-button" onclick="toggleMenu()">☰</div>
+    <a class="buy-button" href="#">Buy</a>
+    <div class="flags">
+      <img src="hu.png" alt="HU" />
+      <img src="en.png" alt="EN" />
+    </div>
+  </header>  <nav id="menu">
+    <a href="#" onclick="showPage('main')">Főoldal</a>
+    <a href="#" onclick="showPage('author')">A szerzőről</a>
+    <a href="#" onclick="showPage('contact')">Kapcsolat</a>
+    <a href="#" onclick="showPage('buy')">Könyvvásárlás</a>
+  </nav>  <div class="main-content" id="main">
+    <div class="description">
+      <h1>Az igazi győztesek</h1>
+      <p>Az Olympus Intézet futócsapatába bekerülni az ország egyik legkeményebb kihívása. A verseny szoros, a tét hatalmas: csak az maradhat talpon, aki bírja fizikailag és lelkileg is. A fiatal atléták nemcsak az idővel, hanem egymással, az elvárásokkal és saját belső korlátaikkal is megküzdenek.</p>
+      <p>Egy váratlan jelentkező felkavarja az állóvizet. Egy döntés, amit senki sem ért, ösztönből születik – és mindent megváltoztat. Az edzők, a csapattársak, a rendszer: mindenki válaszúthoz érkezik.</p>
+      <p>Ez a történet a küzdelemről, az összetartozásról és a vezetés erejéről szól. Arról, hogyan formálhat át egyetlen ember jelenléte egy egész közösséget. És hogy a legmélyebb döntéseink értelmét sokszor csak évekkel később érthetjük meg – ha egyáltalán valaha megértjük azt.</p>
+    </div>
+  </div>  <div class="author-page" id="author">
+    <img src="szerzo.jpg" alt="Hudák Olivér" />
+    <p>Hudák Olivér természetközeli környezetben nőtt fel, ahol már fiatal korától különleges figyelemmel fordult a világ részletei felé. Megérintették a táj színei, a fények és árnyékok játéka, a formák harmóniája. A képi világ iránti vonzalma korán kialakult, és azóta is végigkíséri alkotói útján.</p>
+    <p>Érdeklődése a film, a fotó és a festészet mellett a zene és dalszerzés irányába is kiterjed, ezek számára nemcsak kifejezőeszközök, hanem a belső világ megjelenítésének természetes formái. Alkotásaiban a művészetet egyfajta belső nyelvként használja, hogy az emberi lélek mélységeit és a világban rejlő láthatatlan minőségeket közvetítse.</p>
+    <p>Munkáiban központi szerepet kap az élet szépsége, a tudatosság és a lelki világ. Évek óta foglalkoztatja a pszichológia, a spiritualitás és az élet értelmének keresése. Forgatókönyveiben, filmötleteiben és képeiben gyakran jelenik meg az a szándék, hogy az ember belső forrásához, mélyebb önmagához vezessen vissza – csendesen, érzékenyen, túl a felszíni történeteken.</p>
+    <p>Alkotói törekvése, hogy eszköztárát folyamatosan fejlesztve minél professzionálisabban tudja megragadni és átadni azt a láthatatlan világot, amely a lélekből fakad – legyen az egy mozdulatban, egy hangban vagy egy pillanatban elkapott fényben.</p>
+  </div>  <div class="contact-page" id="contact">
+    <h2>Kapcsolat</h2>
+    <p>E-mail: info@truewinnersbook.com</p>
   </div>  <script>
+    const nav = document.getElementById("menu");
+
     function toggleMenu() {
-      document.getElementById('menu').classList.toggle('active');
+      nav.classList.toggle("show");
     }
 
-    function goTo(page) {
-      document.getElementById('home').classList.remove('active');
-      document.getElementById('author').classList.remove('active');
-      if (page === 'home') {
-        document.getElementById('home').classList.add('overlay');
-      } else {
-        document.getElementById('home').classList.remove('overlay');
-      }
-      document.getElementById(page).classList.add('active');
+    function showPage(page) {
+      document.getElementById("main").style.display = page === "main" ? "block" : "none";
+      document.getElementById("author").style.display = page === "author" ? "block" : "none";
+      document.getElementById("contact").style.display = page === "contact" ? "block" : "none";
       toggleMenu();
     }
-
-    function setLang(lang) {
-      // Ide jön majd a nyelvváltás logikája
-      alert('Language changed to ' + lang);
-    }
-  </script></body>
-</html>
+  </script></body></html>
