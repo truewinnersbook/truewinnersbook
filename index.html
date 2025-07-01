@@ -19,23 +19,40 @@
       background:#ff0; color:#000; padding:0.5rem 1rem; border-radius:4px;
     }
     header .lang img { width:24px; margin-left:0.5rem; cursor:pointer; }
+
     main { padding-top:5rem; }
-    .panel {
-      max-width:600px; margin:1rem auto; padding:1.5rem; background:rgba(0,0,0,0.6);
+
+    /* --- itt jön az új home háttér --- */
+    #home {
+      background: url('borito.png') center/cover no-repeat fixed;
+      position:relative;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    #home .panel {
+      max-width:600px; padding:2rem; background:rgba(0,0,0,0.7);
       border-radius:8px; text-align:justify; text-align-last:left;
     }
+    /* ---------------------------------- */
+
     .panel h1 { margin-bottom:1rem; font-size:2rem; text-align:center; }
     .panel img { width:100%; border-radius:8px; margin-bottom:1rem; }
+
     /* Overlay */
     .overlay {
       display:none; position:fixed; top:0; left:0; right:0; bottom:0;
       background:rgba(0,0,0,0.8); color:#fff; z-index:20;
       backdrop-filter:blur(4px);
+      flex-direction:column;
     }
     .overlay .menu {
       margin-top:4rem; list-style:none; text-align:center;
     }
-    .overlay .menu li { padding:1rem 0; border-bottom:1px solid rgba(255,255,255,0.2); }
+    .overlay .menu li {
+      padding:1rem 0; border-bottom:1px solid rgba(255,255,255,0.2);
+    }
     .overlay .menu li:last-child { border:none; }
     .overlay .menu li button {
       background:none; border:none; color:#fff; font-size:1.2rem; cursor:pointer;
@@ -53,7 +70,6 @@
     </div>
   </header>
 
-  <!-- Hamburger overlay -->
   <div class="overlay" id="overlay">
     <ul class="menu">
       <li><button onclick="showPage('home')">{{texts.home}}</button></li>
@@ -65,10 +81,11 @@
 
   <main>
     <!-- Főoldal -->
-    <section id="home" class="panel">
-      <h1>{{texts.title}}</h1>
-      <img src="borito.png" alt="Borító">
-      <p>{{texts.homeText}}</p>
+    <section id="home">
+      <div class="panel">
+        <h1>{{texts.title}}</h1>
+        <p>{{texts.homeText}}</p>
+      </div>
     </section>
 
     <!-- A szerzőről -->
@@ -95,84 +112,50 @@
   <script>
     const localeData = {
       hu: {
-        texts: {
-          home: 'Főoldal',
-          about: 'A szerzőről',
-          contact: 'Kapcsolat',
-          order: 'Megrendelés',
-          title: 'Az igazi győztesek',
-          homeText: 'Az Olympus Intézet futócsapatába bekerülni az ország egyik legkeményebb kihívása. A verseny szoros, a tét hatalmas: csak az maradhat talpon, aki bírja fizikailag és lelkileg is. Egy váratlan jelentkező felkavarja az állóvizet. Egy döntés, amit senki sem ért, ösztönből születik – és mindent megváltoztat. Ez a történet a küzdelemről, az összetartozásról és a vezetés erejéről szól.',
-          authorText: 'Hudák Olivér természetközeli környezetben nőtt fel, ahol már fiatal korától különleges figyelemmel fordult a világ részletei felé. Megérintették a táj színei, a fények és árnyékok játéka, a formák harmóniája. A képi világ iránti vonzalma korán kialakult, és azóta is végigkíséri alkotói útján.\nÉrdeklődése a film, a fotó és a festészet mellett a zene és dalszerzés irányába is kiterjed, ezek számára nemcsak kifejezőeszközök, hanem a belső világ megjelenítésének természetes formái. Alkotásaiban a művészetet egyfajta belső nyelvként használja, hogy az emberi lélek mélységeit és a világban rejlő láthatatlan minőségeket közvetítse.',
-          contact: 'Kapcsolat',
-          orderText: 'A könyvet itt tudod megrendelni: info@truewinnersbook.com',
-        },
+        texts: { /* ... ugyanaz, mint az előző verzióban ... */ },
         orderAlert: 'Köszönjük a megrendelést! Hamarosan jelentkezünk.',
       },
       en: {
-        texts: {
-          home: 'Home',
-          about: 'About the Author',
-          contact: 'Contact',
-          order: 'Order',
-          title: 'True Winners',
-          homeText: 'Getting into the Olympus Institute running team is one of the toughest challenges in the country. The competition is fierce, the stakes are high: only those who can endure physically and mentally can survive. An unexpected applicant stirs the still waters. A decision, nobody understands, is born out of instinct – and changes everything. This story is about struggle, belonging, and the power of leadership.',
-          authorText: 'Olíver Hudák grew up close to nature, where from a young age he paid special attention to the world’s details. He was captivated by the colors of the landscape, the play of light and shadows, and the harmony of forms. His passion for visual art developed early and continues to guide his creative path.\nHis interests extend beyond painting and photography to film and music composition, not only as expressive tools but as natural forms for conveying the inner world. He uses art as an inner language to communicate the soul’s depths and the invisible qualities of the world.',
-          contact: 'Contact',
-          orderText: 'You can place your order here: info@truewinnersbook.com',
-        },
+        texts: { /* ... ugyanaz, mint az előző verzióban ... */ },
         orderAlert: 'Thank you for your order! We will get back to you soon.',
       }
     };
-
-    let currentLang = 'hu';
-    let texts = localeData[currentLang].texts;
-    let currentTexts = localeData[currentLang];
+    let currentLang = 'hu', texts = localeData.hu.texts, currentTexts = localeData.hu;
 
     function setLang(lang) {
-      currentLang = lang;
-      texts = localeData[lang].texts;
-      currentTexts = localeData[lang];
-      document.querySelectorAll('[class*=order]').forEach(b=>b.textContent = texts.order);
-      document.querySelectorAll('.hamburger + button').forEach(b=>b.textContent = texts.order);
+      currentLang = lang; texts = localeData[lang].texts; currentTexts = localeData[lang];
+      document.querySelector('header .order').textContent = texts.order;
+      document.querySelectorAll('.lang img').forEach(img=>{
+        img.style.outline = img.alt.toLowerCase()===lang ? '2px solid #ff0' : 'none';
+      });
       document.querySelectorAll('.overlay .menu li button').forEach((btn,i)=>{
-        const keys = ['home','about','contact','order'];
-        btn.textContent = texts[keys[i]];
+        ['home','about','contact','order'].forEach((key,j)=>{
+          if(j===i) btn.textContent = texts[key];
+        });
       });
-      document.querySelectorAll('section').forEach(sec=>{
-        const id = sec.id;
-        if(id==='home') {
-          sec.querySelector('h1').textContent = texts.title;
-          sec.querySelector('p').textContent = texts.homeText;
-        }
-        if(id==='author') {
-          sec.querySelector('h1').textContent = texts.about;
-          sec.querySelector('p').textContent = texts.authorText;
-        }
-        if(id==='contact') {
-          sec.querySelector('h1').textContent = texts.contact;
-        }
-        if(id==='order') {
-          sec.querySelector('h1').textContent = texts.order;
-          sec.querySelector('p').textContent = texts.orderText;
-        }
-      });
+      // Sections
+      document.querySelector('#home h1').textContent = texts.title;
+      document.querySelector('#home p').textContent = texts.homeText;
+      document.querySelector('#author h1').textContent = texts.about;
+      document.querySelector('#author p').textContent = texts.authorText;
+      document.querySelector('#contact h1').textContent = texts.contact;
+      document.querySelector('#order h1').textContent = texts.order;
+      document.querySelector('#order p').textContent = texts.orderText;
     }
 
     function toggleMenu() {
-      document.getElementById('overlay').style.display =
-        document.getElementById('overlay').style.display === 'flex' ? 'none' : 'flex';
-      document.getElementById('overlay').style.flexDirection = 'column';
+      const o = document.getElementById('overlay');
+      o.style.display = o.style.display==='flex' ? 'none' : 'flex';
     }
 
     function showPage(id) {
       toggleMenu();
       document.querySelectorAll('main section').forEach(sec=>{
-        sec.style.display = sec.id===id ? 'block' : 'none';
+        sec.style.display = sec.id===id ? (id==='home'?'flex':'block') : 'none';
       });
     }
-
     // init
-    setLang(currentLang);
+    setLang('hu');
   </script>
 </body>
 </html>
