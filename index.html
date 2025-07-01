@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Az igazi győztesek – könyv</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      color: white;
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://i.imgur.com/WYuWZTw.jpeg') no-repeat center center fixed;
+      background-size: cover;
+    }
+    header {
+      padding: 2rem;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    nav {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    button {
+      margin: 0.5rem;
+      padding: 0.5rem 1rem;
+      border: none;
+      background: #ffffff44;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    main {
+      max-width: 800px;
+      margin: auto;
+      padding: 1rem 2rem;
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 1rem;
+    }
+    .lang { display: none; }
+    .visible { display: block; }
+    a {
+      color: #ffd700;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Az igazi győztesek – A nehézségeken átvezető kitartás útja</h1>
+  </header>
+
+  <nav>
+    <button onclick="showLang('hu')">🇭🇺 Magyar</button>
+    <button onclick="showLang('en')">🇬🇧 English</button>
+  </nav>
+
+  <main>
+    <div id="hu" class="lang visible">
+      <p>
+        Az Olympus Intézet futócsapatába bekerülni az ország egyik legkeményebb kihívása. A verseny szoros, a tét hatalmas: csak az maradhat talpon, aki bírja fizikailag és lelkileg is. A fiatal atléták nemcsak az idővel, hanem egymással, az elvárásokkal és saját belső korlátaikkal is megküzdenek.
+      </p>
+      <p>
+        Egy váratlan jelentkező felkavarja az állóvizet. Egy döntés, amit senki sem ért, ösztönből születik – és mindent megváltoztat. Az edzők, a csapattársak, a rendszer: mindenki válaszúthoz érkezik.
+      </p>
+      <p>
+        Ez a történet a küzdelemről, az összetartozásról és a vezetés erejéről szól. Arról, hogyan formálhat át egyetlen ember jelenléte egy egész közösséget. És hogy a legmélyebb döntéseink értelmét sokszor csak évekkel később érthetjük meg – ha egyáltalán valaha megértjük azt.
+      </p>
+      <p>
+        Ez egy regény versenyről, sorsokról és arról, mi tesz valakit igazi győztessé.
+      </p>
+    </div>
+
+    <div id="en" class="lang">
+      <p>
+        Getting into the Olympus Institute’s running team is one of the toughest challenges in the country. The competition is fierce, and the stakes are high: only those who are strong enough, both physically and mentally, will make it. These young athletes must battle not only time, but each other, the expectations—and their own internal limits.
+      </p>
+      <p>
+        A sudden applicant shakes everything up. A decision no one understands is made purely from instinct—and changes everything. Coaches, teammates, the system itself—all are forced to make a choice.
+      </p>
+      <p>
+        This is a story about struggle, belonging, and the power of leadership. About how the presence of one person can transform an entire community. And how the meaning of our deepest decisions is often only understood years later—if ever.
+      </p>
+      <p>
+        This is a novel about competition, destiny, and what it truly means to be a winner.
+      </p>
+    </div>
+  </main>
+
+  <script>
+    function showLang(lang) {
+      document.querySelectorAll('.lang').forEach(el => el.classList.remove('visible'));
+      document.getElementById(lang).classList.add('visible');
+    }
+  </script>
+</body>
+</html>
