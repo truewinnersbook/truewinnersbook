@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="hu">
+<!DOCTYPE html>
+<html lang="hu">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,146 +8,87 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #000 url('borito.png') no-repeat center top;
+      background-image: url('borito.png');
       background-size: cover;
+      background-position: center;
       color: white;
     }
+
     .overlay {
       background-color: rgba(0, 0, 0, 0.7);
-      padding: 2rem;
-      min-height: 100vh;
+      padding: 20px;
+      max-width: 900px;
+      margin: 100px auto 40px;
+      border-radius: 12px;
+      text-align: justify;
     }
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem;
-    }
-    .flags img {
-      width: 30px;
-      height: 20px;
-      margin-left: 0.5rem;
+
+    .menu-icon {
+      font-size: 26px;
       cursor: pointer;
-      border: 2px solid transparent;
-    }
-    .flags img.active {
-      border: 2px solid yellow;
-    }
-    .menu-button {
-      font-size: 1.5rem;
-      background: none;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1001;
       color: white;
-      border: none;
-      cursor: pointer;
     }
-    .order-btn {
-      background-color: yellow;
-      color: black;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
-      font-weight: bold;
-    }
-    nav {
-      position: absolute;
-      top: 60px;
-      left: 0;
-      background-color: #111;
-      width: 100%;
+
+    .menu {
       display: none;
       flex-direction: column;
+      position: fixed;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      background-color: black;
+      z-index: 1000;
     }
-    nav a {
-      padding: 1rem;
+
+    .menu a {
+      padding: 15px;
       text-decoration: none;
       color: white;
       border-bottom: 1px solid #333;
     }
-    nav.show {
+
+    .menu a:hover {
+      background-color: #222;
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 20px;
+      width: 100%;
       display: flex;
+      justify-content: center;
+      z-index: 999;
     }
-    .content {
-      max-width: 800px;
-      margin: auto;
-      text-align: justify;
+
+    .buy-button {
+      background-color: yellow;
+      color: black;
+      padding: 10px 20px;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      margin: 0 60px;
+      cursor: pointer;
     }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.8rem;
-      color: #aaa;
+
+    .flags {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 999;
+    }
+
+    .flags img {
+      width: 30px;
+      height: 20px;
+      margin-left: 8px;
+      cursor: pointer;
+      border: 1px solid white;
     }
   </style>
 </head>
 <body>
-  <div class="overlay">
-    <div class="header">
-      <button class="menu-button" onclick="toggleMenu()">☰</button>
-      <a href="#" class="order-btn" id="order-button">Megrendelés</a>
-      <div class="flags">
-        <img src="flag-hu.png" alt="HU" onclick="switchLanguage('hu')" id="flag-hu" class="active">
-        <img src="flag-en.png" alt="EN" onclick="switchLanguage('en')" id="flag-en">
-      </div>
-    </div>
-    <nav id="menu">
-      <a href="#" onclick="navigate('home')" id="nav-home">Főoldal</a>
-      <a href="#" onclick="navigate('author')" id="nav-author">A szerzőről</a>
-      <a href="#" onclick="navigate('contact')" id="nav-contact">Kapcsolat</a>
-      <a href="#" onclick="navigate('order')" id="nav-order">Megrendelés</a>
-    </nav><div class="content" id="page-content">
-  <p id="description">
-    Az Olympus Intézet futócsapatába bekerülni az ország egyik legkeményebb kihívása. A verseny szoros, a tét hatalmas: csak az maradhat talpon, aki bírja fizikailag és lelkileg is. A fiatal atléták nemcsak az idővel, hanem egymással, az elvárásokkal és saját belső korlátaikkal is megküzdenek.<br><br>
-    Egy váratlan jelentkező felkavarja az állóvizet. Egy döntés, amit senki sem ért, ösztönből születik – és mindent megváltoztat. Az edzők, a csapattársak, a rendszer: mindenki válaszúthoz érkezik.<br><br>
-    Ez a történet a küzdelemről, az összetartozásról és a vezetés erejéről szól. Arról, hogyan formálhat át egyetlen ember jelenléte egy egész közösséget. És hogy a legmélyebb döntéseink értelmét sokszor csak évekkel később érthetjük meg – ha egyáltalán valaha megértjük azt.<br><br>
-    Ez egy regény versenyről, sorsokról és arról, mi tesz valakit igazi győztessé.
-  </p>
-</div>
-
-<footer>
-  Kapcsolat: <a href="tel:+36705298594" style="color: yellow;">06 70 529 85 94</a>
-</footer>
-
-  </div>  <script>
-    const huText = {
-      "description": `Az Olympus Intézet futócsapatába bekerülni az ország egyik legkeményebb kihívása. A verseny szoros, a tét hatalmas: csak az maradhat talpon, aki bírja fizikailag és lelkileg is. A fiatal atléták nemcsak az idővel, hanem egymással, az elvárásokkal és saját belső korlátaikkal is megküzdenek.<br><br>
-      Egy váratlan jelentkező felkavarja az állóvizet. Egy döntés, amit senki sem ért, ösztönből születik – és mindent megváltoztat. Az edzők, a csapattársak, a rendszer: mindenki válaszúthoz érkezik.<br><br>
-      Ez a történet a küzdelemről, az összetartozásról és a vezetés erejéről szól. Arról, hogyan formálhat át egyetlen ember jelenléte egy egész közösséget. És hogy a legmélyebb döntéseink értelmét sokszor csak évekkel később érthetjük meg – ha egyáltalán valaha megértjük azt.<br><br>
-      Ez egy regény versenyről, sorsokról és arról, mi tesz valakit igazi győztessé.`,
-      "nav-home": "Főoldal",
-      "nav-author": "A szerzőről",
-      "nav-contact": "Kapcsolat",
-      "nav-order": "Megrendelés",
-      "order-button": "Megrendelés"
-    };
-
-    const enText = {
-      "description": `Getting into the Olympus Institute’s running team is one of the toughest challenges in the country. The competition is fierce, and the stakes are high: only those who are strong both physically and mentally can survive. The young athletes must battle not only time, but each other, expectations, and their own internal limits.<br><br>
-      A surprising applicant stirs the waters. A decision born from instinct, misunderstood by everyone – and it changes everything. Coaches, teammates, the system: everyone reaches a crossroads.<br><br>
-      This is a story about struggle, unity, and the power of leadership. About how the presence of a single person can transform an entire community. And how the meaning of our deepest decisions often only becomes clear years later – if ever at all.<br><br>
-      This is a novel about competition, destiny, and what it truly means to be a winner.`,
-      "nav-home": "Home",
-      "nav-author": "About the Author",
-      "nav-contact": "Contact",
-      "nav-order": "Order Now",
-      "order-button": "Order Now"
-    };
-
-    function switchLanguage(lang) {
-      const text = lang === 'hu' ? huText : enText;
-      for (let key in text) {
-        const el = document.getElementById(key);
-        if (el) el.innerHTML = text[key];
-      }
-      document.getElementById('flag-hu').classList.toggle('active', lang === 'hu');
-      document.getElementById('flag-en').classList.toggle('active', lang === 'en');
-    }
-
-    function toggleMenu() {
-      const menu = document.getElementById('menu');
-      menu.classList.toggle('show');
-    }
-
-    function navigate(section) {
-      alert(`Navigating to: ${section}`);
-    }
-  </script></body>
-</html>
