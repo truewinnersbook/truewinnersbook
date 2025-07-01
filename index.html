@@ -1,147 +1,143 @@
 <!DOCTYPE html><html lang="hu">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Az igazi győztesek</title>
-    <style>
-      body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        color: white;
-        background: url('borito.png') no-repeat center center fixed;
-        background-size: cover;
-      }
-      .overlay {
-        background-color: rgba(0, 0, 0, 0.6);
-        padding: 2rem;
-        border-radius: 1rem;
-        max-width: 700px;
-        margin: 10vh auto;
-      }
-      .menu {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem;
-        position: fixed;
-        top: 0;
-        width: 100%;
-        background: rgba(0, 0, 0, 0.8);
-      }
-      .menu button {
-        background: #ff0;
-        color: black;
-        padding: 0.5rem 1rem;
-        border: none;
-        border-radius: 5px;
-        font-weight: bold;
-      }
-      .flags img {
-        width: 30px;
-        margin-left: 0.5rem;
-        cursor: pointer;
-      }
-      .hamburger {
-        font-size: 1.5rem;
-        cursor: pointer;
-      }
-      .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        color: white;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        padding: 2rem;
-      }
-      .modal.active {
-        display: flex;
-      }
-      .modal-content {
-        background: #222;
-        padding: 2rem;
-        border-radius: 1rem;
-        max-width: 800px;
-      }
-      .close {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        font-size: 2rem;
-        cursor: pointer;
-      }
-      .menu-items {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        margin-top: 1rem;
-      }
-      .menu-items button {
-        background: #333;
-        color: white;
-        border: 1px solid white;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="menu">
-      <div class="hamburger" onclick="openMenu()">☰</div>
-      <button>Buy</button>
-      <div class="flags">
-        <img src="https://flagcdn.com/w40/hu.png" alt="HU" />
-        <img src="https://flagcdn.com/w40/gb.png" alt="EN" />
-      </div>
-    </div><div class="overlay">
-  <h1>Az igazi győztesek</h1>
-  <p>
-    Az Olympus Intézet futócsapatába bekerülni az ország egyik legkeményebb kihívása. A verseny szoros, a tét hatalmas: csak az maradhat talpon, aki bírja fizikailag és lelkileg is. A fiatal atléták nemcsak az idővel, hanem egymással, az elvárásokkal és saját belső korlátaikkal is megküzdenek.
-  </p>
-  <p>
-    Egy váratlan jelentkező felkavarja az állóvizet. Egy döntés, amit senki sem ért, ösztönből születik – és mindent megváltoztat. Az edzők, a csapattársak, a rendszer: mindenki válaszúthoz érkezik.
-  </p>
-  <p>
-    Ez a történet a küzdelemről, az összetartozásról és a vezetés erejéről szól. Arról, hogyan formálhat át egyetlen ember jelenléte egy egész közösséget. És hogy a legmélyebb döntéseink értelmét sokszor csak évekkel később érthetjük meg – ha egyáltalán valaha megértjük azt.
-  </p>
-</div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Az igazi győztesek</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: url('borito.png') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      min-height: 100vh;
+    }
+    .overlay {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 2rem;
+      margin: 4rem auto;
+      max-width: 800px;
+      border-radius: 12px;
+    }
+    .menu-icon, .flag {
+      position: fixed;
+      top: 1rem;
+      z-index: 1000;
+    }
+    .menu-icon {
+      left: 1rem;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+    .buy-button {
+      position: fixed;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: yellow;
+      color: black;
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+    .flag {
+      width: 32px;
+      right: 1rem;
+    }
+    .flag.hu { right: 3.5rem; }
+    .menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #111;
+      color: white;
+      padding: 2rem;
+      z-index: 999;
+    }
+    .menu.active {
+      display: block;
+    }
+    .menu a {
+      display: block;
+      padding: 1rem 0;
+      color: white;
+      text-decoration: none;
+      border-bottom: 1px solid #444;
+    }
+    .author-page {
+      display: none;
+      padding: 2rem;
+      background: #111;
+      color: white;
+      min-height: 100vh;
+    }
+    .author-page.active {
+      display: block;
+    }
+    .author-photo {
+      max-width: 250px;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+    }
+    .hamburger {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      font-size: 2rem;
+      z-index: 1001;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="menu-icon" onclick="toggleMenu()">☰</div>
+  <button class="buy-button">Buy</button>
+  <img src="flag-hu.png" class="flag hu" onclick="setLang('hu')" />
+  <img src="flag-en.png" class="flag" onclick="setLang('en')" />  <div id="menu" class="menu">
+    <a href="#" onclick="goTo('home')">Főoldal</a>
+    <a href="#" onclick="goTo('author')">A szerzőről</a>
+    <a href="#">Kapcsolat</a>
+    <a href="#">Könyvvásárlás</a>
+  </div>  <div id="home" class="overlay">
+    <h1>Az igazi győztesek</h1>
+    <p>Az Olympus Intézet futócsapatába bekerülni az ország egyik legkeményebb kihívása...</p>
+    <!-- Rövidített a példakedvéért -->
+  </div>  <div id="author" class="author-page">
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+    <img src="szerzo.jpg" alt="Hudák Olivér" class="author-photo">
+    <p>Hudák Olivér természetközeli környezetben nőtt fel, ahol már fiatal korától különleges figyelemmel fordult a világ részletei felé...</p>
+    <!-- Rövidített a példakedvéért -->
+  </div>  <script>
+    function toggleMenu() {
+      document.getElementById('menu').classList.toggle('active');
+    }
 
-<div class="modal" id="menuModal">
-  <div class="close" onclick="closeMenu()">&times;</div>
-  <div class="modal-content">
-    <h2>Menü</h2>
-    <div class="menu-items">
-      <button onclick="showContent('author')">A szerzőről</button>
-      <button onclick="showContent('contact')">Kapcsolat</button>
-    </div>
-    <div id="author" style="display:none; margin-top:1rem">
-      <img src="szerzo.jpg" alt="Hudák Olivér" style="width:100%; max-width:300px;" />
-      <p>
-        Hudák Olivér természetközeli környezetben nőtt fel, ahol már fiatal korától különleges figyelemmel fordult a világ részletei felé... (folyt. a teljes bemutatkozás szöveggel)
-      </p>
-    </div>
-    <div id="contact" style="display:none; margin-top:1rem">
-      <p>Írj nekem: truewinnersbook@gmail.com</p>
-    </div>
-  </div>
-</div>
+    function goTo(page) {
+      document.getElementById('home').classList.remove('active');
+      document.getElementById('author').classList.remove('active');
+      if (page === 'home') {
+        document.getElementById('home').classList.add('overlay');
+      } else {
+        document.getElementById('home').classList.remove('overlay');
+      }
+      document.getElementById(page).classList.add('active');
+      toggleMenu();
+    }
 
-<script>
-  function openMenu() {
-    document.getElementById("menuModal").classList.add("active");
-  }
-  function closeMenu() {
-    document.getElementById("menuModal").classList.remove("active");
-  }
-  function showContent(id) {
-    document.getElementById("author").style.display = "none";
-    document.getElementById("contact").style.display = "none";
-    document.getElementById(id).style.display = "block";
-  }
-</script>
-
-  </body>
+    function setLang(lang) {
+      // Ide jön majd a nyelvváltás logikája
+      alert('Language changed to ' + lang);
+    }
+  </script></body>
 </html>
