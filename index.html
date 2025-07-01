@@ -1,123 +1,147 @@
 <!DOCTYPE html><html lang="hu">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Az igazi győztesek</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
-    body {
-      background: url('borito.png') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
-    }
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 20px;
-      background-color: rgba(0, 0, 0, 0.6);
-    }
-    .menu-icon, .language, .buy-button {
-      display: flex;
-      align-items: center;
-    }
-    .menu-icon {
-      cursor: pointer;
-      font-size: 24px;
-      color: white;
-    }
-    .buy-button button {
-      background-color: yellow;
-      color: black;
-      padding: 10px 20px;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-      border-radius: 5px;
-      margin: 0 10px;
-    }
-    .language img {
-      width: 30px;
-      height: 20px;
-      margin-left: 10px;
-      cursor: pointer;
-      border: 2px solid transparent;
-    }
-    .language img.active {
-      border-color: yellow;
-    }
-    .content {
-      padding: 40px 20px;
-      background-color: rgba(0, 0, 0, 0.6);
-      max-width: 800px;
-      margin: 100px auto 0;
-      border-radius: 10px;
-    }
-    @media (max-width: 768px) {
-      .content {
-        margin: 80px 10px;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Az igazi győztesek</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        color: white;
+        background: url('borito.png') no-repeat center center fixed;
+        background-size: cover;
       }
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
-    <div class="buy-button">
-      <button id="buyButton">Vásárlás</button>
-    </div>
-    <div class="language">
-      <img src="https://flagcdn.com/hu.svg" id="hu" onclick="switchLang('hu')" class="active" alt="Magyar" />
-      <img src="https://flagcdn.com/gb.svg" id="en" onclick="switchLang('en')" alt="English" />
-    </div>
-  </header>  <div class="content">
-    <p id="description">
-      Az Olympus Intézet futócsapatába bekerülni az ország egyik legkeményebb kihívása. A verseny szoros, a tét hatalmas: csak az maradhat talpon, aki bíra fizikailag és lelkileg is. A fiatal atléták nemcsak az idővel, hanem egymással, az elvárásokkal és saját belső korlátaikkal is megküzdenek.Egy váratlan jelentkező felkavarja az állóvizet. Egy döntés, amit senki sem ért, ösztönből születik – és mindent megváltoztat. Az edzők, a csapattársak, a rendszer: mindenki válaszúthoz érkezik.
-
-  Ez a történet a küzdelemről, az összetartozásról és a vezetés erejéről szól. Arról, hogyan formálhat át egyetlen ember jelenléte egy egész közösséget. És hogy a legmélyebb döntéseink értelmét sokszor csak évekkel később érthetjük meg – ha egyáltalán valaha megértjük azt.
-
-  Ez egy regény versenyről, sorsokról és arról, mi tesz valakit igazi győztessé.
-</p>
-
-  </div>  <script>
-    function switchLang(lang) {
-      const huFlag = document.getElementById('hu');
-      const enFlag = document.getElementById('en');
-      const description = document.getElementById('description');
-      const buyButton = document.getElementById('buyButton');
-
-      if (lang === 'hu') {
-        description.innerText = `Az Olympus Intézet futócsapatába bekerülni az ország egyik legkeményebb kihívása. A verseny szoros, a tét hatalmas: csak az maradhat talpon, aki bírja fizikailag és lelkileg is. A fiatal atléták nemcsak az idővel, hanem egymással, az elvárásokkal és saját belső korlátaikkal is megküzdenek.
-
-Egy váratlan jelentkező felkavarja az állóvizet. Egy döntés, amit senki sem ért, ösztönből születik – és mindent megváltoztat. Az edzők, a csapattársak, a rendszer: mindenki válaszúthoz érkezik.
-
-Ez a történet a küzdelemről, az összetartozásról és a vezetés erejéről szól. Arról, hogyan formálhat át egyetlen ember jelenléte egy egész közösséget. És hogy a legmélyebb döntéseink értelmét sokszor csak évekkel később érthetjük meg – ha egyáltalán valaha megértjük azt.
-
-Ez egy regény versenyről, sorsokról és arról, mi tesz valakit igazi győztessé.`;
-        buyButton.innerText = 'Vásárlás';
-        huFlag.classList.add('active');
-        enFlag.classList.remove('active');
-      } else {
-        description.innerText = `Getting into the Olympus Institute running team is one of the toughest challenges in the country. The competition is tight, the stakes are high: only those who can endure both physically and mentally will survive. Young athletes must fight not only against time, but also against each other, expectations, and their own inner limits.
-
-An unexpected applicant stirs the waters. A decision born out of instinct that no one understands – and it changes everything. Coaches, teammates, the system: everyone faces a turning point.
-
-This story is about struggle, belonging, and the power of leadership. How one person’s presence can transform an entire community. And how the true meaning of our deepest decisions often only becomes clear years later – if we ever understand them at all.
-
-It’s a novel about competition, destiny, and what makes someone a true winner.`;
-        buyButton.innerText = 'Buy';
-        enFlag.classList.add('active');
-        huFlag.classList.remove('active');
+      .overlay {
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 2rem;
+        border-radius: 1rem;
+        max-width: 700px;
+        margin: 10vh auto;
       }
-    }
+      .menu {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.8);
+      }
+      .menu button {
+        background: #ff0;
+        color: black;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+      }
+      .flags img {
+        width: 30px;
+        margin-left: 0.5rem;
+        cursor: pointer;
+      }
+      .hamburger {
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 2rem;
+      }
+      .modal.active {
+        display: flex;
+      }
+      .modal-content {
+        background: #222;
+        padding: 2rem;
+        border-radius: 1rem;
+        max-width: 800px;
+      }
+      .close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 2rem;
+        cursor: pointer;
+      }
+      .menu-items {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+      .menu-items button {
+        background: #333;
+        color: white;
+        border: 1px solid white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="menu">
+      <div class="hamburger" onclick="openMenu()">☰</div>
+      <button>Buy</button>
+      <div class="flags">
+        <img src="https://flagcdn.com/w40/hu.png" alt="HU" />
+        <img src="https://flagcdn.com/w40/gb.png" alt="EN" />
+      </div>
+    </div><div class="overlay">
+  <h1>Az igazi győztesek</h1>
+  <p>
+    Az Olympus Intézet futócsapatába bekerülni az ország egyik legkeményebb kihívása. A verseny szoros, a tét hatalmas: csak az maradhat talpon, aki bírja fizikailag és lelkileg is. A fiatal atléták nemcsak az idővel, hanem egymással, az elvárásokkal és saját belső korlátaikkal is megküzdenek.
+  </p>
+  <p>
+    Egy váratlan jelentkező felkavarja az állóvizet. Egy döntés, amit senki sem ért, ösztönből születik – és mindent megváltoztat. Az edzők, a csapattársak, a rendszer: mindenki válaszúthoz érkezik.
+  </p>
+  <p>
+    Ez a történet a küzdelemről, az összetartozásról és a vezetés erejéről szól. Arról, hogyan formálhat át egyetlen ember jelenléte egy egész közösséget. És hogy a legmélyebb döntéseink értelmét sokszor csak évekkel később érthetjük meg – ha egyáltalán valaha megértjük azt.
+  </p>
+</div>
 
-    function toggleMenu() {
-      alert("Hamburger menü megnyitása itt majd külön oldalakra vezethet.");
-    }
-  </script></body>
+<div class="modal" id="menuModal">
+  <div class="close" onclick="closeMenu()">&times;</div>
+  <div class="modal-content">
+    <h2>Menü</h2>
+    <div class="menu-items">
+      <button onclick="showContent('author')">A szerzőről</button>
+      <button onclick="showContent('contact')">Kapcsolat</button>
+    </div>
+    <div id="author" style="display:none; margin-top:1rem">
+      <img src="szerzo.jpg" alt="Hudák Olivér" style="width:100%; max-width:300px;" />
+      <p>
+        Hudák Olivér természetközeli környezetben nőtt fel, ahol már fiatal korától különleges figyelemmel fordult a világ részletei felé... (folyt. a teljes bemutatkozás szöveggel)
+      </p>
+    </div>
+    <div id="contact" style="display:none; margin-top:1rem">
+      <p>Írj nekem: truewinnersbook@gmail.com</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openMenu() {
+    document.getElementById("menuModal").classList.add("active");
+  }
+  function closeMenu() {
+    document.getElementById("menuModal").classList.remove("active");
+  }
+  function showContent(id) {
+    document.getElementById("author").style.display = "none";
+    document.getElementById("contact").style.display = "none";
+    document.getElementById(id).style.display = "block";
+  }
+</script>
+
+  </body>
 </html>
