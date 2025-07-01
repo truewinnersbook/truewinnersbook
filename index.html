@@ -1,254 +1,159 @@
-<!DOCTYPE html>
-<html lang="hu">
+<!DOCTYPE html><html lang="hu">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Az igazi győztesek</title>
 <style>
-  * {
-    box-sizing: border-box;
-  }
-  body, html {
-    margin: 0; padding: 0;
-    height: 100%;
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; height: 100%;
     font-family: Arial, sans-serif;
+    transition: background 0.3s;
+  }
+  /* Normál háttér */
+  body.with-bg {
     background: url('borito.png') no-repeat center center fixed;
     background-size: cover;
-    color: white;
   }
-  .overlay {
-    background-color: rgba(0,0,0,0.7);
+  /* Egységes háttér szerző/cím oldalra */
+  body.no-bg {
+    background: #202020;
+  }
+  /* Szövegmező */
+  #content {
     max-width: 600px;
-    margin: 80px auto 40px auto;
+    margin: 90px auto 40px auto;
     padding: 20px;
+    background: rgba(0,0,0,0.7);
     border-radius: 10px;
     text-align: justify;
+    line-height: 1.5em;
   }
+  /* Fejléc */
   header {
     position: fixed;
     top: 0; left: 0; right: 0;
     height: 60px;
-    background-color: rgba(0,0,0,0.8);
+    background: rgba(0,0,0,0.8);
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 15px;
-    z-index: 10000;
+    z-index: 11000;
   }
   #hamburger {
     font-size: 30px;
     cursor: pointer;
+    color: white;
     user-select: none;
   }
-  #menu {
-    position: fixed;
-    top: 60px; left: 0;
-    width: 100%;
-    background-color: rgba(0,0,0,0.95);
-    color: white;
-    display: none;
-    flex-direction: column;
-    z-index: 9999;
-  }
-  #menu li {
-    list-style: none;
-    padding: 15px 20px;
-    border-bottom: 1px solid #444;
-    cursor: pointer;
-    font-size: 18px;
-  }
-  #menu li:hover {
-    background-color: #333;
-  }
   #buy-button {
-    background-color: yellow;
+    background: yellow;
     color: black;
-    padding: 10px 18px;
+    padding: 10px 20px;
     border: none;
     border-radius: 5px;
     font-weight: bold;
+    font-size: 18px;
     cursor: pointer;
     user-select: none;
-    font-size: 18px;
   }
-  #flags {
-    display: flex;
-    gap: 10px;
+  #flags { display: flex; gap: 10px; }
+  #flags img { width: 30px; height: 20px; cursor: pointer; }
+  /* Menü overlay */
+  #menuOverlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(20,20,20,0.95);
+    color: white;
+    z-index: 12000;
+    flex-direction: column;
+    padding-top: 60px;
+    text-align: center;
   }
-  #flags img {
-    width: 30px;
-    height: 20px;
+  #menuOverlay.active { display: flex; }
+  #menuOverlay ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px auto;
+    width: 90%; max-width: 300px;
+  }
+  #menuOverlay ul li {
+    padding: 15px 10px;
+    border-bottom: 1px solid #444;
+    font-size: 20px;
     cursor: pointer;
   }
-  /* Responsive */
+  #menuOverlay ul li:hover { background: #333; }
+  #closeMenuBtn {
+    position: fixed;
+    top: 10px; right: 20px;
+    font-size: 30px;
+    cursor: pointer;
+    user-select: none;
+  }
+  #authorImage {
+    display: block;
+    margin: 20px auto 30px auto;
+    max-width: 200px;
+    border-radius: 10px;
+  }
   @media (max-width: 700px) {
-    .overlay {
-      margin: 70px 10px 30px 10px;
-      max-width: none;
-      font-size: 16px;
-    }
-    #menu li {
-      font-size: 16px;
-      padding: 12px 15px;
-    }
-    #buy-button {
-      font-size: 16px;
-      padding: 8px 15px;
-    }
+    #content { margin: 70px 10px 30px 10px; font-size: 16px; }
+    #menuOverlay ul li { font-size: 18px; padding: 12px 8px; }
   }
 </style>
 </head>
-<body>
-
+<body class="with-bg">
 <header>
-  <div id="hamburger" onclick="toggleMenu()">☰</div>
-  <button id="buy-button" onclick="alertBuy()">Megrendelés</button>
+  <div id="hamburger">☰</div>
+  <button id="buy-button">Megrendelés</button>
   <div id="flags">
-    <img id="flag-hu" src="hu.gif" alt="HU" onclick="switchLanguage('hu')" />
-    <img id="flag-en" src="En.png" alt="EN" onclick="switchLanguage('en')" />
+    <img id="flag-hu" src="hu.gif" alt="Magyar" />
+    <img id="flag-en" src="En.png" alt="English" />
   </div>
 </header>
-
-<ul id="menu">
-  <li id="menu-fooldal" onclick="goHome()">Főoldal</li>
-  <li id="menu-szerzo" onclick="goAuthor()">A szerzőről</li>
-  <li id="menu-kapcsolat" onclick="goContact()">Kapcsolat</li>
-  <li id="menu-megrendeles" onclick="goOrder()">Megrendelés</li>
-</ul>
-
-<div class="overlay" id="content">
-  <!-- Ide jön a szöveg -->
+<div id="content"></div>
+<div id="menuOverlay" aria-modal="true" aria-hidden="true">
+  <div id="closeMenuBtn">×</div>
+  <ul>
+    <li id="menu-home">Főoldal</li>
+    <li id="menu-author">A szerzőről</li>
+    <li id="menu-contact">Kapcsolat</li>
+    <li id="menu-order">Megrendelés</li>
+  </ul>
 </div>
-
 <script>
   const content = document.getElementById('content');
-  const menu = document.getElementById('menu');
+  const menuOverlay = document.getElementById('menuOverlay');
+  const hamburger = document.getElementById('hamburger');
+  const closeMenuBtn = document.getElementById('closeMenuBtn');
   const buyButton = document.getElementById('buy-button');
-  const menuFooldal = document.getElementById('menu-fooldal');
-  const menuSzerzo = document.getElementById('menu-szerzo');
-  const menuKapcsolat = document.getElementById('menu-kapcsolat');
-  const menuMegrendeles = document.getElementById('menu-megrendeles');
-
+  const flagHu = document.getElementById('flag-hu');
+  const flagEn = document.getElementById('flag-en');
+  const menuHome = document.getElementById('menu-home');
+  const menuAuthor = document.getElementById('menu-author');
+  const menuContact = document.getElementById('menu-contact');
+  const menuOrder = document.getElementById('menu-order');
   let currentLang = 'hu';
-
-  const texts = {
-    hu: {
-      main: `
-        Az Olympus Intézet futócsapatába bekerülni az ország egyik legkeményebb kihívása. 
-        A verseny szoros, a tét hatalmas: csak az maradhat talpon, aki bírja fizikailag és lelkileg is. 
-        A fiatal atléták nemcsak az idővel, hanem egymással, az elvárásokkal és saját belső korlátaikkal is megküzdenek.
-        Egy váratlan jelentkező felkavarja az állóvizet. Egy döntés, amit senki sem ért, ösztönből születik – és mindent megváltoztat. 
-        Az edzők, a csapattársak, a rendszer: mindenki válaszúthoz érkezik.
-        Ez a történet a küzdelemről, az összetartozásról és a vezetés erejéről szól. 
-        Arról, hogyan formálhat át egyetlen ember jelenléte egy egész közösséget. 
-        És hogy a legmélyebb döntéseink értelmét sokszor csak évekkel később érthetjük meg – ha egyáltalán valaha megértjük azt.
-        Ez egy regény versenyről, sorsokról és arról, mi tesz valakit igazi győztessé.
-      `,
-      buy: 'Megrendelés',
-      fooldal: 'Főoldal',
-      szerzo: 'A szerzőről',
-      kapcsolat: 'Kapcsolat',
-      megrendeles: 'Megrendelés',
-      author: `
-        Hudák Olivér természetközeli környezetben nőtt fel, ahol már fiatal korától különleges figyelemmel fordult a világ részletei felé. 
-        Megérintették a táj színei, a fények és árnyékok játéka, a formák harmóniája. A képi világ iránti vonzalma korán kialakult, és azóta is végigkíséri alkotói útján.
-        Érdeklődése a film, a fotó és a festészet mellett a zene és dalszerzés irányába is kiterjed, ezek számára nemcsak kifejezőeszközök, hanem a belső világ megjelenítésének természetes formái. 
-        Alkotásaiban a művészetet egyfajta belső nyelvként használja, hogy az emberi lélek mélységeit és a világban rejlő láthatatlan minőségeket közvetítse.
-        Munkáiban központi szerepet kap az élet szépsége, a tudatosság és a lelki világ. Évek óta foglalkoztatja a pszichológia, a spiritualitás és az élet értelmének keresése. 
-        Forgatókönyveiben, filmötleteiben és képeiben gyakran jelenik meg az a szándék, hogy az ember belső forrásához, mélyebb önmagához vezessen vissza – csendesen, érzékenyen, túl a felszíni történeteken.
-        Alkotói törekvése, hogy eszköztárát folyamatosan fejlesztve minél professzionálisabban tudja megragadni és átadni azt a láthatatlan világot, amely a lélekből fakad – legyen az egy mozdulatban, egy hangban vagy egy pillanatban elkapott fényben.
-      `,
-      kapcsolat: `
-        Email: info@truewinnersbook.com<br />
-        Telefon: 06 70 529 85 94
-      `,
-      orderAlert: "Köszönjük, hogy meg szeretnéd rendelni a könyvet! A rendelés módját hamarosan megadjuk."
-    },
-    en: {
-      main: `
-        Getting into the Olympus Institute running team is one of the toughest challenges in the country. 
-        The competition is fierce, the stakes are high: only those who can endure physically and mentally can survive. 
-        The young athletes struggle not only with time but also with each other, expectations, and their own inner limits.
-        An unexpected applicant stirs the still waters. A decision, nobody understands, is born out of instinct – and changes everything. 
-        Coaches, teammates, the system: everyone faces a turning point.
-        This story is about struggle, belonging, and the power of leadership. 
-        How one person’s presence can transform an entire community. 
-        And how the true meaning of our deepest decisions often only becomes clear years later – if we ever understand them at all.
-        It’s a novel about competition, destiny, and what makes someone a true winner.
-      `,
-      buy: 'Order',
-      fooldal: 'Home',
-      szerzo: 'About the Author',
-      kapcsolat: 'Contact',
-      megrendeles: 'Order',
-      author: `
-        Olivér Hudák grew up in a nature-rich environment where from a young age he was drawn to the details of the world. 
-        He was touched by the colors of the landscape, the play of light and shadows, and the harmony of forms. 
-        His attraction to visual arts developed early and has accompanied him throughout his creative path.
-        His interests extend to film, photography, painting, music, and songwriting, which serve not only as means of expression but also as natural forms of depicting his inner world. 
-        In his works, art serves as an inner language that conveys the depths of the human soul and the invisible qualities of the world.
-        Central themes in his work include the beauty of life, awareness, and the spiritual realm. 
-        He has been engaged for years in psychology, spirituality, and the search for life's meaning. 
-        In his screenplays, film ideas, and images, he often seeks to guide the viewer back to their inner source and deeper self – quietly, sensitively, beyond surface stories.
-        His artistic goal is to continuously develop his toolkit to professionally capture and convey the invisible world that arises from the soul – whether in a gesture, a sound, or a captured moment of light.
-      `,
-      kapcsolat: `
-        Email: info@truewinnersbook.com<br />
-        Phone: +36 70 529 85 94
-      `,
-      orderAlert: "Thank you for your interest in ordering the book! Details on how to order will be provided soon."
-    }
-  };
-
-  // Menüpontok elemei
-  function toggleMenu() {
-    if(menu.style.display === 'flex') {
-      menu.style.display = 'none';
-    } else {
-      menu.style.display = 'flex';
-      menu.style.flexDirection = 'column';
-    }
-  }
-
-  function switchLanguage(lang) {
-    currentLang = lang;
-    content.innerHTML = texts[lang].main;
-    buyButton.textContent = texts[lang].buy;
-    menuFooldal.textContent = texts[lang].fooldal;
-    menuSzerzo.textContent = texts[lang].szerzo;
-    menuKapcsolat.textContent = texts[lang].kapcsolat;
-    menuMegrendeles.textContent = texts[lang].megrendeles;
-    toggleMenu(); // menü bezárása váltás után
-  }
-
-  function goHome() {
-    toggleMenu();
-    content.innerHTML = texts[currentLang].main;
-    window.scrollTo({top: 0, behavior: 'smooth'});
-  }
-  function goAuthor() {
-    toggleMenu();
-    content.innerHTML = texts[currentLang].author;
-    window.scrollTo({top: 0, behavior: 'smooth'});
-  }
-  function goContact() {
-    toggleMenu();
-    content.innerHTML = texts[currentLang].kapcsolat;
-    window.scrollTo({top: 0, behavior: 'smooth'});
-  }
-  function goOrder() {
-    toggleMenu();
-    alert(texts[currentLang].orderAlert);
-  }
-  function alertBuy() {
-    alert(texts[currentLang].orderAlert);
-  }
-
-  // Alap nyelv és tartalom betöltése oldalbetöltéskor
-  window.onload = () => {
-    switchLanguage('hu');
-  };
+  const texts = { hu: { main: `...`, buy:'Megrendelés', home:'Főoldal', author:'A szerzőről', contact:'Kapcsolat', order:'Megrendelés', authorContent:`...`, contactContent:`Email: info@truewinnersbook.com<br/>Telefon: 06 70 529 85 94`, orderAlert:`Köszönjük a megrendelést!` }, en: { main:`...`, buy:'Order', home:'Home', author:'About the Author', contact:'Contact', order:'Order', authorContent:`...`, contactContent:`Email: info@truewinnersbook.com<br/>Phone: +36 70 529 85 94`, orderAlert:`Thank you!` }};
+  function openMenu(){ menuOverlay.classList.add('active'); menuOverlay.setAttribute('aria-hidden','false'); }
+  function closeMenu(){ menuOverlay.classList.remove('active'); menuOverlay.setAttribute('aria-hidden','true'); }
+  hamburger.onclick=openMenu;
+  closeMenuBtn.onclick=closeMenu;
+  flagHu.onclick=()=>switchLanguage('hu');
+  flagEn.onclick=()=>switchLanguage('en');
+  menuHome.onclick=()=>{ closeMenu(); showMain(); };
+  menuAuthor.onclick=()=>{ closeMenu(); showAuthor(); };
+  menuContact.onclick=()=>{ closeMenu(); showContact(); };
+  menuOrder.onclick=()=>{ closeMenu(); alert(texts[currentLang].orderAlert); };
+  buyButton.onclick=()=>alert(texts[currentLang].orderAlert);
+  function switchLanguage(lang){ currentLang=lang; document.body.className='with-bg'; menuHome.textContent=texts[lang].home; menuAuthor.textContent=texts[lang].author; menuContact.textContent=texts[lang].contact; menuOrder.textContent=texts[lang].order; buyButton.textContent=texts[lang].buy; showMain(); }
+  function showMain(){ document.body.className='with-bg'; content.innerHTML=texts[currentLang].main; window.scrollTo({top:0}); }
+  function showAuthor(){ document.body.className='no-bg'; content.innerHTML=texts[currentLang].authorContent; window.scrollTo({top:0}); }
+  function showContact(){ document.body.className='no-bg'; content.innerHTML=texts[currentLang].contactContent; window.scrollTo({top:0}); }
+  window.onload=()=>switchLanguage('hu');
 </script>
-
 </body>
 </html>
