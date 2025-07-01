@@ -6,7 +6,7 @@
   <title>Az igazi győztesek</title>
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:sans-serif; color:#fff; }
+    body { font-family:sans-serif; color:#fff; background:#000; }
     header {
       position:fixed; top:0; left:0; right:0; height:60px;
       background:rgba(0,0,0,0.6); display:flex;
@@ -75,7 +75,7 @@
   </header>
 
   <!-- Overlay -->
-  <div id="overlay" style="display:flex;flex-direction:column;">
+  <div id="overlay">
     <ul>
       <li><button onclick="show('home')">Főoldal</button></li>
       <li><button onclick="show('author')">A szerzőről</button></li>
@@ -105,8 +105,7 @@
       <img src="szerzo.jpg" alt="Szerző" style="width:100%;border-radius:8px;margin-bottom:1rem;">
       <p>
         Hudák Olivér természetközeli környezetben nőtt fel, ahol már fiatal korától különleges figyelemmel fordult a világ részletei felé.
-        Megérintették a táj színei, a fények és árnyékok játéka, a formák harmóniája.
-        A képi világ iránti vonzalma korán kialakult, és azóta is végigkíséri alkotói útján.
+        Megérintették a táj színei, a fények és árnyékok játéka, a formák harmóniája. A képi világ iránti vonzalma korán kialakult, és azóta is végigkíséri alkotói útján.
         Érdeklődése a film, a fotó és a festészet mellett a zene és dalszerzés irányába is kiterjed,
         ezek számára nemcsak kifejezőeszközök, hanem a belső világ megjelenítésének természetes formái.
       </p>
@@ -129,7 +128,8 @@
   <script>
     function toggleMenu(){
       const ov = document.getElementById('overlay');
-      ov.style.display = ov.style.display==='flex' ? 'none' : 'flex';
+      ov.style.display = (ov.style.display==='flex'?'none':'flex');
+      ov.style.flexDirection = 'column';
     }
     function show(id){
       toggleMenu();
@@ -139,21 +139,17 @@
     }
     function setHomeHU(){
       show('home');
-      document.querySelector('section#home h1').textContent = 'Az igazi győztesek';
-      document.querySelector('section#home p').textContent = 
+      document.querySelector('#home h1').textContent = 'Az igazi győztesek';
+      document.querySelector('#home p').innerText = 
         'Az Olympus Intézet futócsapatába bekerülni az ország egyik legkeményebb kihívása. A verseny szoros, a tét hatalmas: csak az maradhat talpon, aki bírja fizikailag és lelkileg is. A fiatal atléták nemcsak az idővel, hanem egymással, az elvárásokkal és saját belső korlátaikkal is megküzdenek. Egy váratlan jelentkező felkavarja az állóvizet. Egy döntés, amit senki sem ért, ösztönből születik – és mindent megváltoztat. Ez a történet a küzdelemről, az összetartozásról és a vezetés erejéről szól.';
     }
     function setHomeEN(){
       show('home');
-      document.querySelector('section#home h1').textContent = 'True Winners';
-      document.querySelector('section#home p').textContent = 
+      document.querySelector('#home h1').textContent = 'True Winners';
+      document.querySelector('#home p').innerText =
         'Getting into the Olympus Institute running team is one of the toughest challenges in the country. The competition is fierce, the stakes are high: only those who can endure physically and mentally can survive. The young athletes struggle not only with time but also with each other, expectations, and their own inner limits. An unexpected applicant stirs the still waters. A decision, nobody understands, is born out of instinct – and changes everything. This story is about struggle, belonging, and the power of leadership.';
     }
-
-    // Induláskor csak a home látszik
-    document.addEventListener('DOMContentLoaded', ()=>{
-      show('home');
-    });
+    document.addEventListener('DOMContentLoaded', ()=>show('home'));
   </script>
 
 </body>
