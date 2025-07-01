@@ -129,3 +129,60 @@
       Ez egy regény versenyről, sorsokról és arról, mi tesz valakit igazi győztessé.
     </p>
   </div>
+<script>
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      if (menu.style.display === 'block') {
+        menu.style.display = 'none';
+      } else {
+        menu.style.display = 'block';
+      }
+    }
+
+    function switchLanguage(lang) {
+      const overlay = document.querySelector('.overlay');
+      if (lang === 'hu') {
+        overlay.innerHTML = `
+          <p>
+            Az Olympus Intézet futócsapatába bekerülni az ország egyik legkeményebb kihívása.
+            A verseny szoros, a tét hatalmas: csak az maradhat talpon, aki bírja fizikailag és lelkileg is.
+            A fiatal atléták nemcsak az idővel, hanem egymással, az elvárásokkal és saját belső korlátaikkal is megküzdenek.
+          </p>
+          <p>
+            Egy váratlan jelentkező felkavarja az állóvizet. Egy döntés, amit senki sem ért, ösztönből születik – és mindent megváltoztat.
+            Az edzők, a csapattársak, a rendszer: mindenki válaszúthoz érkezik.
+          </p>
+          <p>
+            Ez a történet a küzdelemről, az összetartozásról és a vezetés erejéről szól.
+            Arról, hogyan formálhat át egyetlen ember jelenléte egy egész közösséget.
+            És hogy a legmélyebb döntéseink értelmét sokszor csak évekkel később érthetjük meg – ha egyáltalán valaha megértjük azt.
+          </p>
+          <p>
+            Ez egy regény versenyről, sorsokról és arról, mi tesz valakit igazi győztessé.
+          </p>
+        `;
+      } else if (lang === 'en') {
+        overlay.innerHTML = `
+          <p>
+            Getting into the Olympus Institute running team is one of the toughest challenges in the country.
+            The competition is fierce, the stakes are high: only those who can endure physically and mentally can survive.
+            The young athletes struggle not only with time but also with each other, expectations, and their own inner limits.
+          </p>
+          <p>
+            An unexpected applicant stirs the still waters. A decision, nobody understands, is born out of instinct – and changes everything.
+            Coaches, teammates, the system: everyone faces a turning point.
+          </p>
+          <p>
+            This story is about struggle, belonging, and the power of leadership.
+            How one person’s presence can transform an entire community.
+            And how the true meaning of our deepest decisions often only becomes clear years later – if we ever understand them at all.
+          </p>
+          <p>
+            It’s a novel about competition, destiny, and what makes someone a true winner.
+          </p>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>
